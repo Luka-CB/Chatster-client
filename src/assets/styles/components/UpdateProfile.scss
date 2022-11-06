@@ -1,0 +1,149 @@
+.update-profile-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: $light-trans;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(18px);
+
+  .close-icon {
+    position: absolute;
+    right: 0;
+    margin: 10px;
+    font-size: 2rem;
+    color: $danger;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      color: $danger-hover;
+    }
+  }
+
+  .wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .del-account {
+      width: 90%;
+      margin: 20px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      #del-text {
+        color: $danger;
+        text-shadow: 1px 1px 1px rgb(199, 180, 180);
+        letter-spacing: 2px;
+        font-style: italic;
+      }
+      #middle {
+        color: $danger;
+        font-weight: bold;
+        text-shadow: 1px 1px 1px rgb(199, 180, 180);
+        letter-spacing: 2px;
+        font-size: 1.3rem;
+      }
+
+      .del-btn {
+        background-color: $danger;
+        width: 100px;
+        padding: 5px 0;
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: 0.2s ease-in-out;
+
+        #del-icon {
+          margin-right: 10px;
+          color: rgb(204, 188, 188);
+          transition: 0.2s ease-in-out;
+        }
+        #btn-text {
+          color: rgb(204, 188, 188);
+          transition: 0.2s ease-in-out;
+        }
+
+        &:hover {
+          background-color: $danger-hover;
+
+          #del-icon {
+            color: $light;
+          }
+          #btn-text {
+            color: $light;
+          }
+        }
+      }
+    }
+
+    .upd-account {
+      width: 90%;
+      margin: 20px auto;
+
+      #upd-text {
+        text-align: center;
+        text-shadow: 1px 1px 1px black;
+        font-weight: 500;
+        letter-spacing: 2px;
+      }
+
+      form {
+        margin-top: 20px;
+        width: 100%;
+
+        .input-box {
+          display: flex;
+          flex-direction: column;
+          margin-top: 20px;
+
+          label {
+            padding: 5px;
+            text-shadow: 1px 1px 1px black;
+            font-weight: 500;
+            letter-spacing: 2px;
+          }
+
+          input {
+            padding: 10px;
+            font-size: 1.1rem;
+            border: 1px solid $success;
+            outline: none;
+            background-color: $light-trans;
+            border-radius: 15px;
+            transition: 0.3s ease-in-out;
+
+            &:focus {
+              background-color: $light;
+            }
+          }
+        }
+
+        #upd-btn {
+          margin-top: 20px;
+          width: 250px;
+          padding: 5px;
+          border: none;
+          outline: none;
+          background-color: $primary;
+          color: rgb(160, 214, 202);
+          border-radius: 15px;
+          font-family: inherit;
+          border: 1px solid $primary;
+          cursor: pointer;
+          transition: 0.2s ease-in-out;
+
+          &:hover {
+            color: black;
+            background-color: transparent;
+          }
+        }
+      }
+    }
+  }
+}

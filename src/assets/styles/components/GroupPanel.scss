@@ -1,0 +1,95 @@
+.col-one-empty {
+  width: 5%;
+  background-color: rgb(215, 211, 218);
+  box-shadow: 3px 2px 11px black;
+  margin-top: 15px;
+  margin-right: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.col-one {
+  width: 30%;
+  background-color: rgb(215, 211, 218);
+  box-shadow: 3px 2px 11px black;
+  margin-top: 15px;
+  margin-right: 20px;
+  border-bottom-right-radius: 20px;
+
+  .groups-wrapper {
+    padding: 10px;
+    height: 50vh;
+
+    /* width */
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 5px rgb(112, 112, 112);
+      border-radius: 10px;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+      background: black;
+      border-radius: 10px;
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+      background: $secondary-hover;
+    }
+
+    .group {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+
+      #group-name {
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      #image {
+        position: relative;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 50%;
+        }
+
+        #online {
+          position: absolute;
+          width: 10px;
+          height: 10px;
+          background-color: rgb(0, 197, 0);
+          top: 0;
+          right: 10%;
+          border-radius: 50%;
+          box-shadow: 0 0 3px rgb(7, 238, 7);
+        }
+
+        #offline {
+          position: absolute;
+          width: 10px;
+          height: 10px;
+          background-color: $danger;
+          top: 0;
+          right: 10%;
+          border-radius: 50%;
+          box-shadow: 0 0 3px $danger-hover;
+        }
+      }
+    }
+  }
+}

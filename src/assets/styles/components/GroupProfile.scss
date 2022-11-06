@@ -1,0 +1,224 @@
+.group-profile {
+  display: flex;
+  padding: 10px;
+  position: relative;
+
+  #close-icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 10px;
+    font-size: 2rem;
+    color: $danger;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      color: $danger-hover;
+    }
+  }
+
+  .image-wrapper {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .image {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+    }
+
+    #upload-link {
+      margin-top: 10px;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    .info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      #name {
+        display: flex;
+        align-items: center;
+
+        h3 {
+          text-shadow: 1px 1px 1px black;
+          letter-spacing: 3px;
+          font-weight: 400;
+        }
+
+        #edit-icon {
+          margin-left: 10px;
+          font-size: 1.5rem;
+          color: rgb(53, 53, 53);
+          cursor: pointer;
+          transition: 0.2s ease-in-out;
+
+          &:hover {
+            color: black;
+          }
+        }
+      }
+
+      #date {
+        margin-top: 10px;
+      }
+
+      #admin {
+        margin-top: 10px;
+
+        span {
+          color: rgb(85, 85, 85);
+          font-style: italic;
+        }
+      }
+    }
+
+    .activity {
+      display: flex;
+      justify-content: space-around;
+
+      .requests {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid black;
+        padding: 2px 5px;
+        position: relative;
+        width: 100px;
+        border-radius: 5px;
+        background-color: rgb(41, 41, 41);
+        cursor: pointer;
+        transition: 0.2s ease-in-out;
+
+        span {
+          font-size: 0.8rem;
+          color: rgb(189, 180, 180);
+          transition: 0.2s ease-in-out;
+        }
+
+        #pill {
+          border: 1px solid $success;
+          box-shadow: 0 0 3px $success;
+          background-color: $success;
+          display: flex;
+          width: 25px;
+          align-items: center;
+          justify-content: center;
+          color: $light;
+          transition: 0.2s ease-in-out;
+        }
+
+        &:hover {
+          background-color: black;
+
+          span {
+            color: $light;
+          }
+
+          #pill {
+            background-color: $success-hover;
+            box-shadow: 0 0 5px $success-hover;
+          }
+        }
+      }
+
+      .add-friend {
+        margin-left: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid black;
+        padding: 2px 5px;
+        position: relative;
+        width: 100px;
+        border-radius: 5px;
+        background-color: rgb(41, 41, 41);
+        cursor: pointer;
+        transition: 0.2s ease-in-out;
+
+        span {
+          font-size: 0.8rem;
+          color: rgb(189, 180, 180);
+          transition: 0.2s ease-in-out;
+        }
+
+        #add-icon {
+          color: rgb(189, 180, 180);
+          transition: 0.2s ease-in-out;
+        }
+
+        &:hover {
+          background-color: black;
+
+          span {
+            color: $light;
+          }
+
+          #add-icon {
+            color: $light;
+          }
+        }
+      }
+
+      .del-group {
+        margin-left: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid black;
+        padding: 2px 5px;
+        position: relative;
+        width: 115px;
+        border-radius: 5px;
+        background-color: rgb(41, 41, 41);
+        cursor: pointer;
+        transition: 0.2s ease-in-out;
+
+        span {
+          font-size: 0.8rem;
+          color: rgb(189, 180, 180);
+          transition: 0.2s ease-in-out;
+        }
+
+        #del-icon {
+          color: rgb(219, 159, 159);
+          transition: 0.2s ease-in-out;
+        }
+
+        &:hover {
+          background-color: black;
+
+          span {
+            color: $light;
+          }
+
+          #del-icon {
+            color: rgb(238, 125, 125);
+          }
+        }
+      }
+    }
+  }
+}

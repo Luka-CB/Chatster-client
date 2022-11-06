@@ -1,0 +1,13 @@
+.group-container {
+  position: absolute;
+  background-color: $light-trans;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(18px);
+
+  .section-two {
+    display: flex;
+  }
+}

@@ -1,0 +1,67 @@
+.create-group {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 50px;
+
+  input {
+    width: 40%;
+    background-color: transparent;
+    border: 1px solid $light;
+    padding: 5px;
+    border-radius: 10px;
+    border-top-right-radius: unset;
+    border-bottom-right-radius: unset;
+    border-right: unset;
+    outline: none;
+    font-family: inherit;
+    transition: 0.2s ease-in-out;
+
+    &::placeholder {
+      color: rgb(164, 167, 168);
+    }
+
+    &:focus {
+      background-color: $light;
+    }
+  }
+
+  #inputSuccess {
+    border-color: $success;
+    background-color: transparent;
+
+    &::placeholder {
+      color: rgb(93, 255, 128);
+    }
+  }
+
+  #cr-btn {
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    border-top-left-radius: unset;
+    border-bottom-left-radius: unset;
+    padding: 0 10px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      background-color: $light;
+    }
+  }
+
+  #cr-btn-disabled {
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    border-top-left-radius: unset;
+    border-bottom-left-radius: unset;
+    padding: 0 10px;
+    background-color: rgba(185, 185, 185, 0.448);
+    color: rgb(158, 158, 158);
+    font-family: inherit;
+    cursor: default;
+    transition: 0.2s ease-in-out;
+  }
+}
