@@ -45,7 +45,7 @@ const SignUp = () => {
       <div className="image">
         <img src={authPageImg} alt="Auth page Image" />
       </div>
-      <div className="auth">
+      <div className="auth signup-auth">
         <div className="custom_auth">
           {regError && <p>{regError}</p>}
           {errMsg && <p>{errMsg}</p>}

@@ -24,7 +24,7 @@ const Header = () => {
 
   return (
     <div className="header">
-      <h1>Logo App Name</h1>
+      <h1>Logo</h1>
       {user?.id ? (
         <div className="loggedin">
           <p onClick={user?.providerId ? logoutOauth : () => logout()}>

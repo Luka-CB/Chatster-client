@@ -21,6 +21,7 @@ body {
   font-family: "Raleway", sans-serif;
   background-color: $primary;
   background-image: linear-gradient(to bottom right, $primary, $secondary);
+  background-attachment: fixed;
 }
 
 a {

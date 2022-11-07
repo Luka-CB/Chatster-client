@@ -16,6 +16,9 @@ const Home = () => {
         <div className="col_1">
           <div className="hero">
             <h1>Connect with the World!</h1>
+            <div className="image">
+              <img src={MainPageImg} alt="Main Page Image" />
+            </div>
             <p>
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam
               mollitia non numquam temporibus debitis. Nihil quo autem nisi,

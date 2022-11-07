@@ -2,12 +2,16 @@
   width: 100%;
   height: 100vh;
   position: relative;
+  transition: 0.2s ease-in-out;
 
   .logo {
     padding: 10px;
     cursor: pointer;
     color: $light;
     font-size: 2rem;
+    position: absolute;
+    z-index: 10;
+    transition: 0.2s ease-in-out;
   }
 
   .image {
@@ -17,10 +21,38 @@
     top: 50%;
     transform: translateY(-50%);
     left: 10%;
+    transition: 0.2s ease-in-out;
 
     img {
       width: 100%;
       height: 100%;
+      transition: 0.2s ease-in-out;
+    }
+
+    @media (max-width: 1200px) {
+      position: initial;
+      width: 100%;
+      top: unset;
+      transform: unset;
+      left: unset;
+      height: auto;
+      text-align: center;
+
+      img {
+        width: 60%;
+      }
+    }
+  }
+
+  @media (max-width: 1200px) {
+    .signup-auth {
+      .custom_auth {
+        height: 100%;
+
+        h5 {
+          margin-top: 100px;
+        }
+      }
     }
   }
 
@@ -32,17 +64,20 @@
     border-radius: 20px;
     box-shadow: 3px 3px 20px #09647431;
     width: 600px;
+    min-width: 250px;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translateY(-50%);
     min-height: 70vh;
+    transition: 0.2s ease-in-out;
 
     .oauth {
       display: flex;
       flex-direction: column;
       align-items: center;
       margin-top: 30px;
+      transition: 0.2s ease-in-out;
 
       .oauth_btn {
         display: flex;
@@ -77,6 +112,7 @@
       text-align: center;
       margin-top: 30px;
       color: $light;
+      transition: 0.2s ease-in-out;
     }
 
     .custom_auth {
@@ -85,16 +121,19 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      transition: 0.2s ease-in-out;
 
       h5 {
         color: rgb(209, 209, 209);
         letter-spacing: 2px;
+        transition: 0.2s ease-in-out;
 
         span {
           font-size: 1.2rem;
           font-style: italic;
           color: $light;
           text-decoration: underline;
+          transition: 0.2s ease-in-out;
         }
       }
 
@@ -103,6 +142,7 @@
         flex-direction: column;
         width: 70%;
         margin-top: 10px;
+        transition: 0.2s ease-in-out;
 
         input {
           padding: 10px;
@@ -149,10 +189,12 @@
         align-self: flex-start;
         padding: 20px;
         display: flex;
+        transition: 0.2s ease-in-out;
 
         h4 {
           color: rgba(255, 255, 255, 0.438);
           letter-spacing: 2px;
+          transition: 0.2s ease-in-out;
         }
 
         a {
@@ -163,6 +205,158 @@
 
           &:hover {
             color: $light;
+          }
+        }
+      }
+    }
+
+    @media (min-width: 1920px) {
+      width: 1000px;
+      left: 45%;
+      top: 50%;
+
+      .oauth {
+        .oauth_btn {
+          border: 3px solid #096474;
+          width: 600px;
+          margin-top: 20px;
+
+          .icon {
+            font-size: 2.5rem;
+          }
+
+          p {
+            font-size: 1.6rem;
+          }
+        }
+      }
+
+      .or {
+        font-size: 2rem;
+      }
+
+      .custom_auth {
+        margin-top: 50px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: 0.2s ease-in-out;
+
+        h5 {
+          font-size: 1.3rem;
+
+          span {
+            font-size: 1.9rem;
+          }
+        }
+
+        form {
+          margin-top: 20px;
+
+          input {
+            padding: 15px;
+            font-size: 1.6rem;
+          }
+
+          button {
+            margin-top: 30px;
+            width: 450px;
+            padding: 10px;
+            font-size: 1.6rem;
+          }
+        }
+
+        .info {
+          h4 {
+            font-size: 1.5rem;
+          }
+
+          a {
+            font-size: 1.7rem;
+          }
+        }
+      }
+    }
+
+    @media (max-width: 1200px) {
+      backdrop-filter: blur(18px);
+      border: unset;
+      border-radius: unset;
+      width: 100%;
+      left: 0;
+      top: 50%;
+      height: 100%;
+
+      .oauth {
+        margin-top: 60px;
+      }
+
+      .or {
+        text-align: center;
+        margin-top: 30px;
+        color: rgba(0, 0, 0, 0.626);
+
+        @media (max-width: 445px) {
+          color: $light;
+        }
+      }
+
+      .custom_auth {
+        h5 {
+          color: rgba(0, 0, 0, 0.626);
+
+          span {
+            color: rgba(0, 0, 0, 0.912);
+          }
+
+          @media (max-width: 550px) {
+            color: rgb(209, 209, 209);
+
+            span {
+              color: $light;
+            }
+          }
+        }
+      }
+    }
+
+    @media (max-width: 450px) {
+      .oauth {
+        margin-top: 100px;
+
+        .oauth_btn {
+          width: 240px;
+        }
+      }
+
+      .custom_auth {
+        margin-top: 20px;
+
+        form {
+          width: 95%;
+          min-width: 250px;
+
+          button {
+            width: 240px;
+          }
+        }
+
+        .info {
+          align-self: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          h4 {
+            color: rgba(255, 255, 255, 0.438);
+            letter-spacing: 2px;
+            text-align: center;
+          }
+
+          a {
+            margin-left: 0;
+            margin-top: 5px;
           }
         }
       }
