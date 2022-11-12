@@ -19,7 +19,7 @@ const UpdateProfile: React.FC<propsIFace> = ({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { showDeleteModal, showDeleteModalHandler } = useContext(StateContext);
+  const { showDeleteModal, setShowDeleteModal } = useContext(StateContext);
   const { updLoading, updSuccess, updError, updateProfile, getProfile } =
     useContext(UserContext);
 
@@ -61,10 +61,7 @@ const UpdateProfile: React.FC<propsIFace> = ({
             <div className="del-account">
               <h3 id="del-text">Delete Account</h3>
               <span id="middle">{">>>>>>"}</span>
-              <div
-                onClick={() => showDeleteModalHandler(true)}
-                className="del-btn"
-              >
+              <div onClick={() => setShowDeleteModal(true)} className="del-btn">
                 <FaTrashAlt id="del-icon" />
                 <span id="btn-text">Delete</span>
               </div>

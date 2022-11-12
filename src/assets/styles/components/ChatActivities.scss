@@ -1,6 +1,4 @@
-.chat-activities {
-  border-right: 1px solid $light;
-  position: relative;
+.c-a-scroll {
   height: 100vh;
   overflow-y: scroll;
 
@@ -25,6 +23,11 @@
   &::-webkit-scrollbar-thumb:hover {
     background: $light;
   }
+}
+
+.chat-activities {
+  border-right: 1px solid $light;
+  position: relative;
 
   .navigation {
     display: flex;
@@ -44,9 +47,29 @@
         margin-left: 30px;
         cursor: pointer;
         transition: 0.2s ease-in-out;
+        position: relative;
 
         &:hover {
           color: rgb(217, 225, 233);
+        }
+
+        .badge {
+          text-shadow: none;
+          letter-spacing: normal;
+          font-weight: 300;
+          background-color: $danger;
+          width: 30px;
+          height: 20px;
+          border-radius: 15px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: "Courier New", Courier, monospace;
+          font-size: 0.9rem;
+          position: absolute;
+          bottom: -25%;
+          right: 0;
+          color: $light;
         }
       }
 

@@ -6,20 +6,22 @@ interface childrenIFace {
 }
 
 interface stateContextIFace {
-  showGroupHandler: (value: boolean) => void;
-  showUploadImageHandler: (value: boolean) => void;
-  showUpdateGroupNameHandler: (value: boolean) => void;
-  showDeleteModalHandler: (value: boolean) => void;
-  showChatWindowHandler: (value: boolean) => void;
   showGroup: boolean;
+  setShowGroup: any;
   showUploadImage: boolean;
+  setShowUploadImage: any;
   showUpdateGroupName: boolean;
+  setShowUpdateGroupName: any;
   showDeleteModal: boolean;
+  setShowDeleteModal: any;
   showChatWindow: boolean;
+  setShowChatWindow: any;
   showGroupRequests: boolean;
   setShowGroupRequests: any;
   showAddFriend: boolean;
   setShowAddFriend: any;
+  scroll: boolean;
+  setScroll: any;
 }
 
 export const StateContext = createContext({} as stateContextIFace);
@@ -32,6 +34,7 @@ const StateProvider = ({ children }: childrenIFace) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showGroupRequests, setShowGroupRequests] = useState(false);
   const [showAddFriend, setShowAddFriend] = useState(false);
+  const [scroll, setScroll] = useState(true);
 
   const [searchParams] = useSearchParams();
   const groupId = searchParams.get("groupId");
@@ -40,34 +43,37 @@ const StateProvider = ({ children }: childrenIFace) => {
     if (groupId) setShowGroup(true);
   }, [groupId]);
 
-  const showChatWindowHandler = (value: boolean) => {
-    setShowChatWindow(value);
-  };
+  useEffect(() => {
+    if (showGroup) {
+      document.body.style.overflow = "hidden";
+      setScroll(false);
+    } else {
+      document.body.style.overflow = "unset";
+      setScroll(true);
+    }
 
-  const showGroupHandler = (value: boolean) => setShowGroup(value);
-
-  const showUploadImageHandler = (value: boolean) => setShowUploadImage(value);
-
-  const showUpdateGroupNameHandler = (value: boolean) =>
-    setShowUpdateGroupName(value);
-
-  const showDeleteModalHandler = (value: boolean) => setShowDeleteModal(value);
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [showGroup]);
 
   const contextData = {
-    showGroupHandler,
+    setShowGroup,
     showGroup,
-    showUploadImageHandler,
+    setShowUploadImage,
     showUploadImage,
-    showUpdateGroupNameHandler,
+    setShowUpdateGroupName,
     showUpdateGroupName,
-    showDeleteModalHandler,
+    setShowDeleteModal,
     showDeleteModal,
-    showChatWindowHandler,
+    setShowChatWindow,
     showChatWindow,
     showGroupRequests,
     setShowGroupRequests,
     showAddFriend,
     setShowAddFriend,
+    scroll,
+    setScroll,
   };
 
   return (

@@ -15,6 +15,7 @@ import { StateContext } from "../context/features/states";
 import { UnreadMsgContext } from "../context/features/unreadMsg";
 import { GroupContext } from "../context/features/group";
 import { UnreadGroupMsgContext } from "../context/features/unreadGroupMsg";
+import Spinner from "./Spinner";
 
 const ChatWindow = () => {
   const [msgText, setMsgText] = useState("");
@@ -26,8 +27,12 @@ const ChatWindow = () => {
   };
 
   const { user } = useContext(AuthContext);
-  const { showUpdateGroupNameHandler, showChatWindow, showChatWindowHandler } =
-    useContext(StateContext);
+  const {
+    setShowUpdateGroupName,
+    showChatWindow,
+    setShowChatWindow,
+    setScroll,
+  } = useContext(StateContext);
 
   const {
     liveMessages,
@@ -36,6 +41,8 @@ const ChatWindow = () => {
     setLiveGroupMessages,
     socket,
     groupChatUsers,
+    usersOnline,
+    openedChatWindowUsers,
   } = useContext(SocketContext);
 
   const {
@@ -50,6 +57,7 @@ const ChatWindow = () => {
     setGroupMessages,
     setSentMsg,
     userIds,
+    getMsgLoading,
   } = useContext(MessageContext);
 
   const { groupMembers } = useContext(GroupContext);
@@ -68,12 +76,12 @@ const ChatWindow = () => {
 
   useEffect(() => {
     if (chatId) {
-      showChatWindowHandler(true);
+      setShowChatWindow(true);
       getMessages(chatId);
     }
 
     if (groupId) {
-      showChatWindowHandler(true);
+      setShowChatWindow(true);
       getGroupMessages(groupId);
       socket?.emit("addGroupChatUsers", {
         userId: user?.id,
@@ -107,6 +115,12 @@ const ChatWindow = () => {
 
   const createMsgHandler = () => {
     const receiver = userIds.find((userId) => user.id !== userId._id);
+    const recieverIsOnline = usersOnline.find(
+      (userOnline) => userOnline.userId === receiver?._id
+    );
+    const isReceiverChatWindowActive = openedChatWindowUsers.some(
+      (userId) => userId === receiver?._id
+    );
 
     const msgData = {
       message: msgText,
@@ -121,7 +135,7 @@ const ChatWindow = () => {
 
     createMessage(msgData);
 
-    if (msgData.receiverId) {
+    if (!isReceiverChatWindowActive && recieverIsOnline) {
       createUnreadMsg({
         message: msgData.message,
         senderId: msgData.senderId,
@@ -134,6 +148,16 @@ const ChatWindow = () => {
         receiverId: msgData.receiverId,
       });
     }
+
+    if (!recieverIsOnline) {
+      createUnreadMsg({
+        message: msgData.message,
+        senderId: msgData.senderId,
+        recieverId: msgData.receiverId,
+      });
+    }
+
+    setShowEmojiWindow(false);
   };
 
   const createGroupMsgHandler = () => {
@@ -155,32 +179,32 @@ const ChatWindow = () => {
 
     createGroupMessage(msgData);
 
-    if (groupId) {
-      createUnreadGroupMsg({
-        message: msgData.message,
-        senderId: msgData.senderId,
-        recieverIds: receivers,
-        groupId,
-      });
+    createUnreadGroupMsg({
+      message: msgData.message,
+      senderId: msgData.senderId,
+      recieverIds: receivers,
+      groupId: groupId || "",
+    });
 
-      socket?.emit("sendUnreadGroupMessage", {
-        message: msgData.message,
-        senderId: msgData.senderId,
-        receiverIds: receivers,
-        groupId,
-      });
-    }
+    socket?.emit("sendUnreadGroupMessage", {
+      message: msgData.message,
+      senderId: msgData.senderId,
+      receiverIds: receivers,
+      groupId,
+    });
 
     setMsgText("");
+    setShowEmojiWindow(false);
   };
 
   const chatToggleHandler = () => {
     socket?.emit("closeChat", groupId);
     socket?.emit("removeGroupChatUser", user?.id);
+    socket?.emit("onRemoveUserFromChatWindow", user?.id);
 
-    showChatWindowHandler(false);
+    setShowChatWindow(false);
     setChatId("");
-    showUpdateGroupNameHandler(false);
+    setShowUpdateGroupName(false);
     navigate({
       pathname: "/chat",
       search: ``,
@@ -192,16 +216,17 @@ const ChatWindow = () => {
       {showChatWindow ? (
         <>
           <div className="chat-area">
+            {getMsgLoading && <Spinner />}
             <div onClick={chatToggleHandler} className="close-chat">
               <AiOutlineClose id="close-icon" />
               <span>close chat</span>
             </div>
             <ScrollToBottom className="scroll-wrapper">
               <div className="msg-wrapper">
-                {chatId && messages?.length === 0 && (
+                {chatId && messages?.length === 0 && !getMsgLoading && (
                   <p id="no-msgs">No messages!</p>
                 )}
-                {groupId && groupMessages?.length === 0 && (
+                {groupId && groupMessages?.length === 0 && !getMsgLoading && (
                   <p id="no-msgs">No messages!</p>
                 )}
                 {chatId

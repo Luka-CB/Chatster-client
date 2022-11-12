@@ -1,5 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { SocketContext } from "../context/features/socket";
+import { StateContext } from "../context/features/states";
+import { UnreadGroupMsgContext } from "../context/features/unreadGroupMsg";
+import { UnreadMsgContext } from "../context/features/unreadMsg";
 import Friends from "./Friends";
 import Groups from "./groups/Groups";
 import Profile from "./Profile";
@@ -14,6 +18,23 @@ const ChatActivities = () => {
   const [activeNavItem, setActiveNavItem] = useState(
     JSON.parse(localStorage.getItem("activeNavItem") || "Profile")
   );
+
+  const { scroll } = useContext(StateContext);
+  const { unreadGroupMsgs, unreadMsgs } = useContext(SocketContext);
+  const { fetchUnreadGroupMsgs, dataBaseUnreadGroupMsgs } = useContext(
+    UnreadGroupMsgContext
+  );
+  const { fetchUnreadMsgs, dataBaseUnreadMsgs } = useContext(UnreadMsgContext);
+
+  useEffect(() => {
+    fetchUnreadGroupMsgs();
+    fetchUnreadMsgs();
+  }, [
+    unreadGroupMsgs,
+    unreadMsgs,
+    dataBaseUnreadGroupMsgs,
+    dataBaseUnreadMsgs,
+  ]);
 
   const navigationHandler = (item: string) => {
     item === "Profile"
@@ -49,7 +70,7 @@ const ChatActivities = () => {
   });
 
   return (
-    <div className="chat-activities">
+    <div className={scroll ? "chat-activities c-a-scroll" : "chat-activities"}>
       <div className="navigation">
         <div className="logo">
           <Link to={"/"}>
@@ -66,6 +87,20 @@ const ChatActivities = () => {
               onClick={() => navigationHandler(item)}
             >
               {item}
+              {item !== activeNavItem && item !== "Profile" && (
+                <>
+                  {item === "Friends" && unreadMsgs?.length > 0 && (
+                    <div className="badge">
+                      <span>{unreadMsgs?.length}</span>
+                    </div>
+                  )}
+                  {item === "Groups" && unreadGroupMsgs?.length > 0 && (
+                    <div className="badge">
+                      <span>{unreadGroupMsgs?.length}</span>
+                    </div>
+                  )}
+                </>
+              )}
             </h3>
           ))}
         </nav>

@@ -63,19 +63,21 @@ const GroupRequests: React.FC<propsIFace> = ({
           {groupRequests?.length === 0 && <p id="no-reqs">No Requests!</p>}
           {groupRequests?.map((req, i) => (
             <div className="request" key={req._id}>
-              <div className="col-one">
-                {req.from?.avatar ? (
-                  <img src={req.from.avatar} alt="dummy pic" />
-                ) : (
-                  <img src={DummyProfilePic} alt="dummy pic" />
-                )}
+              <div className="req-col-one">
+                <div className="image">
+                  {req.from?.avatar ? (
+                    <img src={req.from.avatar} alt="dummy pic" />
+                  ) : (
+                    <img src={DummyProfilePic} alt="dummy pic" />
+                  )}
+                </div>
                 <h5 id="name" title={req.from.username}>
                   {req.from.username?.length > 17
                     ? req.from.username.substring(0, 17) + "..."
                     : req.from.username}
                 </h5>
               </div>
-              <div className="col-two">
+              <div className="req-col-two">
                 <button
                   onClick={() => acceptRequestHandler(req._id, i)}
                   id="accept"

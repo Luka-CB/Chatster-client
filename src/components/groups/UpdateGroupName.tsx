@@ -10,7 +10,7 @@ interface propsIFace {
 const UpdateGroupName: React.FC<propsIFace> = ({ groupName, groupId }) => {
   const [name, setName] = useState("");
 
-  const { showUpdateGroupNameHandler } = useContext(StateContext);
+  const { setShowUpdateGroupName } = useContext(StateContext);
   const {
     getGroup,
     updateGroupName,
@@ -26,7 +26,7 @@ const UpdateGroupName: React.FC<propsIFace> = ({ groupName, groupId }) => {
 
   useEffect(() => {
     if (updGroupNameSuccess) {
-      showUpdateGroupNameHandler(false);
+      setShowUpdateGroupName(false);
       groupId && getGroup(groupId);
     }
   }, [updGroupNameSuccess, groupId]);
@@ -40,7 +40,7 @@ const UpdateGroupName: React.FC<propsIFace> = ({ groupName, groupId }) => {
   return (
     <div
       className="upd-group-name-bg"
-      onClick={() => showUpdateGroupNameHandler(false)}
+      onClick={() => setShowUpdateGroupName(false)}
     >
       <div
         className="upd-group-name-container"
@@ -56,7 +56,7 @@ const UpdateGroupName: React.FC<propsIFace> = ({ groupName, groupId }) => {
           <button id="update" onClick={updateGroupNameHandler}>
             {updGroupNameLoading ? "Updating..." : "Update"}
           </button>
-          <button id="cancel" onClick={() => showUpdateGroupNameHandler(false)}>
+          <button id="cancel" onClick={() => setShowUpdateGroupName(false)}>
             Cancel
           </button>
         </div>

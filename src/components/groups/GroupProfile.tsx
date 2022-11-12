@@ -1,33 +1,26 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
-import { GroupContext, groupsIFace } from "../../context/features/group";
+import { useContext } from "react";
+import { GroupContext } from "../../context/features/group";
 import DummyGroupPic from "../../assets/images/dummy-group-pic.png";
-import DummyProfilePic from "../../assets/images/dummy-profile-pic.png";
 import {
   AiOutlineEdit,
   AiOutlineCloseCircle,
   AiOutlineUserAdd,
   AiOutlineDelete,
 } from "react-icons/ai";
-import GroupRequests from "./GroupRequests";
-import AddGroupFriends from "./AddGroupFriends";
 import { AuthContext } from "../../context/features/auth";
-import { SocketContext } from "../../context/features/socket";
 import { StateContext } from "../../context/features/states";
-import UploadImage from "../UploadImage";
-import UpdateGroupName from "./UpdateGroupName";
-import DeleteModal from "../DeleteModal";
 
 const GroupProfile = () => {
   const { user } = useContext(AuthContext);
   const { group, setUpdGroupNameSuccess } = useContext(GroupContext);
   const {
-    showUploadImageHandler,
-    showUpdateGroupNameHandler,
-    showDeleteModalHandler,
-    showGroupHandler,
+    setShowUploadImage,
+    setShowUpdateGroupName,
+    setShowDeleteModal,
+    setShowGroup,
     setShowGroupRequests,
     setShowAddFriend,
+    setScroll,
   } = useContext(StateContext);
 
   const isGroupAdmin = group?.admin?._id === user?.id;
@@ -36,7 +29,9 @@ const GroupProfile = () => {
     <div className="group-profile">
       <AiOutlineCloseCircle
         id="close-icon"
-        onClick={() => showGroupHandler(false)}
+        onClick={() => {
+          setShowGroup(false);
+        }}
       />
       <div className="image-wrapper">
         <div className="image">
@@ -47,7 +42,7 @@ const GroupProfile = () => {
           )}
         </div>
         {isGroupAdmin && (
-          <span id="upload-link" onClick={() => showUploadImageHandler(true)}>
+          <span id="upload-link" onClick={() => setShowUploadImage(true)}>
             {group.image ? "Update Image" : "Upload image"}
           </span>
         )}
@@ -65,7 +60,7 @@ const GroupProfile = () => {
                 id="edit-icon"
                 onClick={() => {
                   setUpdGroupNameSuccess(false);
-                  showUpdateGroupNameHandler(true);
+                  setShowUpdateGroupName(true);
                 }}
               />
             )}
@@ -90,10 +85,7 @@ const GroupProfile = () => {
               <span>Add Friend</span>
             </div>
 
-            <div
-              className="del-group"
-              onClick={() => showDeleteModalHandler(true)}
-            >
+            <div className="del-group" onClick={() => setShowDeleteModal(true)}>
               <AiOutlineDelete id="del-icon" />
               <span>Delete Group</span>
             </div>

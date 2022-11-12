@@ -1,12 +1,17 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DummyProfilePic from "../assets/images/dummy-profile-pic.png";
+import { AuthContext } from "../context/features/auth";
 import { ChatContext } from "../context/features/chat";
 import { FriendContext } from "../context/features/friend";
 import { SocketContext } from "../context/features/socket";
 import { UnreadMsgContext } from "../context/features/unreadMsg";
-import { propsIFace } from "./Profile";
 import SearchFriend from "./SearchFriend";
+import Spinner from "./Spinner";
+
+export interface propsIFace {
+  isActive: boolean;
+}
 
 const Friends: React.FC<propsIFace> = ({ isActive }) => {
   const [frIndex, setFrIndex] = useState<number | null>(null);
@@ -21,10 +26,11 @@ const Friends: React.FC<propsIFace> = ({ isActive }) => {
     unfrSuccess,
   } = useContext(FriendContext);
 
-  const { usersOnline, unreadMsgs, setUnreadMsgs } = useContext(SocketContext);
+  const { usersOnline, unreadMsgs, setUnreadMsgs, socket } =
+    useContext(SocketContext);
   const { getChat, chatId } = useContext(ChatContext);
-  const { fetchUnreadMsgs, dataBaseUnreadMsgs, removeUnreadMsgs } =
-    useContext(UnreadMsgContext);
+  const { user } = useContext(AuthContext);
+  const { dataBaseUnreadMsgs, removeUnreadMsgs } = useContext(UnreadMsgContext);
 
   const navigate = useNavigate();
 
@@ -50,8 +56,6 @@ const Friends: React.FC<propsIFace> = ({ isActive }) => {
     if (dataBaseUnreadMsgs) {
       setUnreadMsgs(dataBaseUnreadMsgs);
     }
-
-    fetchUnreadMsgs();
   }, [dataBaseUnreadMsgs]);
 
   const unfriendHandler = (friendId: string, i: number) => {
@@ -66,8 +70,16 @@ const Friends: React.FC<propsIFace> = ({ isActive }) => {
     setUnreadMsgs(filteredUnreadMsgs);
     removeUnreadMsgs(userId);
 
+    socket?.emit("onAddUserToChatWindow", user?.id);
+
     setStartChatIndex(i);
     getChat(userId);
+  };
+
+  const getLatestMsgPreview = (friendId: string) => {
+    const msgArr = unreadMsgs?.filter((msg) => msg.senderId === friendId);
+
+    return msgArr[msgArr.length - 1].message;
   };
 
   return (
@@ -76,14 +88,11 @@ const Friends: React.FC<propsIFace> = ({ isActive }) => {
       <div className="count">
         <h4>Friends: {friendCount}</h4>
       </div>
-      <div
-        className="friends-wrapper"
-        style={{
-          overflowY: friends?.length > 7 ? "scroll" : "initial",
-        }}
-      >
-        {getFriendsLoading && <p>Loading...</p>}
-        {friendCount === 0 && <p id="no-friends">No Friends!</p>}
+      <div className="friends-wrapper">
+        {getFriendsLoading && <Spinner />}
+        {friendCount === 0 && !getFriendsLoading && (
+          <p id="no-friends">No Friends!</p>
+        )}
         {friends?.map((friend, i) => {
           const isOnline = usersOnline?.some(
             (user) => user.userId === friend._id
@@ -126,7 +135,10 @@ const Friends: React.FC<propsIFace> = ({ isActive }) => {
                   </button>
                   {unreadMsgs.length > 0 &&
                     unreadMsgs.some((msg) => msg.senderId === friend._id) && (
-                      <div className="badge">
+                      <div
+                        className="badge"
+                        title={getLatestMsgPreview(friend._id)}
+                      >
                         <span>{unreadMsgCount.length}</span>
                       </div>
                     )}

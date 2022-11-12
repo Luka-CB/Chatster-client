@@ -24,7 +24,7 @@ const UploadImage: React.FC<propsIFace> = ({
   const [url, setUrl] = useState("");
   const [publicId, setPublicId] = useState("");
 
-  const { showUploadImageHandler } = useContext(StateContext);
+  const { setShowUploadImage } = useContext(StateContext);
   const {
     getProfile,
     updateProfileImage,
@@ -118,7 +118,7 @@ const UploadImage: React.FC<propsIFace> = ({
     <div
       className="upload-image-bg"
       onClick={() => {
-        showUploadImageHandler(false);
+        setShowUploadImage(false);
         setPreviewImage("");
         setImage(null);
       }}
@@ -130,7 +130,7 @@ const UploadImage: React.FC<propsIFace> = ({
         <div
           className="close-btn"
           onClick={() => {
-            showUploadImageHandler(false);
+            setShowUploadImage(false);
             setPreviewImage("");
             setImage(null);
           }}

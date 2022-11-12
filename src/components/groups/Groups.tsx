@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import DummyGroupPic from "../../assets/images/dummy-group-pic.png";
-import { propsIFace } from "../Profile";
 import { GroupContext } from "../../context/features/group";
 import { useNavigate } from "react-router-dom";
 import Group from "./Group";
@@ -10,21 +9,24 @@ import CreateGroupName from "./CreateGroupName";
 import SearchGroup from "./SearchGroup";
 import { AuthContext } from "../../context/features/auth";
 import { UnreadGroupMsgContext } from "../../context/features/unreadGroupMsg";
+import Spinner from "../Spinner";
+
+interface propsIFace {
+  isActive: boolean;
+}
 
 const Groups: React.FC<propsIFace> = ({ isActive }) => {
   const { groups, groupCount, getGroupsLoading, searchGroups } =
     useContext(GroupContext);
 
-  const { groupsOnline, unreadGroupMsgs, setUnreadGroupMsgs, socket } =
+  const { groupsOnline, unreadGroupMsgs, setUnreadGroupMsgs } =
     useContext(SocketContext);
 
-  const {
-    dataBaseUnreadGroupMsgs,
-    fetchUnreadGroupMsgs,
-    removeUnreadGroupMsgs,
-  } = useContext(UnreadGroupMsgContext);
+  const { dataBaseUnreadGroupMsgs, removeUnreadGroupMsgs } = useContext(
+    UnreadGroupMsgContext
+  );
 
-  const { showGroup, showGroupHandler } = useContext(StateContext);
+  const { showGroup, setShowGroup, setScroll } = useContext(StateContext);
   const { user } = useContext(AuthContext);
 
   const [query, setQuery] = useState("");
@@ -48,9 +50,7 @@ const Groups: React.FC<propsIFace> = ({ isActive }) => {
 
   useEffect(() => {
     if (dataBaseUnreadGroupMsgs) setUnreadGroupMsgs(dataBaseUnreadGroupMsgs);
-
-    fetchUnreadGroupMsgs();
-  }, []);
+  }, [dataBaseUnreadGroupMsgs]);
 
   const openGroupWindowHandler = (groupId: string) => {
     const filteredUnreadGroupMsgs = unreadGroupMsgs.filter(
@@ -60,11 +60,19 @@ const Groups: React.FC<propsIFace> = ({ isActive }) => {
 
     removeUnreadGroupMsgs(groupId);
 
+    setScroll(false);
+
     navigate({
       pathname: "/chat",
       search: `?groupId=${groupId}`,
     });
-    showGroupHandler(true);
+    setShowGroup(true);
+  };
+
+  const getLatestMsgPreview = (groupId: string) => {
+    const msgArr = unreadGroupMsgs?.filter((msg) => msg.groupId === groupId);
+
+    return msgArr[msgArr.length - 1].message;
   };
 
   return (
@@ -84,14 +92,11 @@ const Groups: React.FC<propsIFace> = ({ isActive }) => {
             query={query}
             setQuery={setQuery}
           />
-          <div
-            className="groups"
-            style={{
-              overflowY: groupCount > 7 ? "scroll" : "initial",
-            }}
-          >
-            {groups?.length === 0 && <p id="no-groups">No Groups!</p>}
-            {getGroupsLoading && <p>Loading...</p>}
+          <div className="groups">
+            {getGroupsLoading && <Spinner />}
+            {groups?.length === 0 && !getGroupsLoading && (
+              <p id="no-groups">No Groups!</p>
+            )}
             {groups?.map((group) => {
               const isGroupOnline = groupsOnline?.some(
                 (groupOnline) => groupOnline.id === group._id
@@ -123,7 +128,10 @@ const Groups: React.FC<propsIFace> = ({ isActive }) => {
                       unreadGroupMsgs.some(
                         (msg) => msg.groupId === group._id
                       ) && (
-                        <div className="badge">
+                        <div
+                          className="badge"
+                          title={getLatestMsgPreview(group._id)}
+                        >
                           <span>
                             {
                               unreadGroupMsgs.filter(

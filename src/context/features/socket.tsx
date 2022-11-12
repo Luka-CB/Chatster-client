@@ -18,10 +18,6 @@ interface childrenIFace {
 interface usersOnlineIFace {
   userId: string;
   socketId: string;
-  chatWindow: {
-    chatId: string;
-    groupId: string;
-  };
 }
 
 interface unreadMsgsIFace {
@@ -57,6 +53,7 @@ interface socketContextIFace {
   setUnreadGroupMsgs: any;
   setUsersOnline: any;
   groupChatUsers: groupChatUsersIFace[];
+  openedChatWindowUsers: string[];
 }
 
 export const SocketContext = createContext({} as socketContextIFace);
@@ -75,6 +72,9 @@ const SocketProvider = ({ children }: childrenIFace) => {
   const [unreadGroupMsgs, setUnreadGroupMsgs] = useState<
     unreadGroupMsgsIFace[]
   >([]);
+  const [openedChatWindowUsers, setOpenedChatWindowUsers] = useState<string[]>(
+    []
+  );
 
   const [searchParams] = useSearchParams();
   const groupId = searchParams.get("groupId");
@@ -143,6 +143,10 @@ const SocketProvider = ({ children }: childrenIFace) => {
     socket?.on("getGroupChatUsers", (data) => {
       setGroupChatUsers(data);
     });
+
+    socket?.on("getOpenedWindowUsers", (users) => {
+      setOpenedChatWindowUsers(users);
+    });
   }, [socket]);
 
   const contextData = {
@@ -159,6 +163,7 @@ const SocketProvider = ({ children }: childrenIFace) => {
     unreadGroupMsgs,
     setUnreadGroupMsgs,
     groupChatUsers,
+    openedChatWindowUsers,
   };
 
   return (

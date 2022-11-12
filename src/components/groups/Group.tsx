@@ -12,15 +12,16 @@ import GroupPanel from "./GroupPanel";
 import GroupMembers from "./GroupMembers";
 
 const Group = () => {
-  const [showGroupRequests, setShowGroupRequests] = useState(false);
-  const [showAddFriend, setShowAddFriend] = useState(false);
-
   const { getGroup, group } = useContext(GroupContext);
   const {
+    showGroupRequests,
+    setShowGroupRequests,
+    showAddFriend,
+    setShowAddFriend,
     showUploadImage,
     showUpdateGroupName,
     showDeleteModal,
-    showGroupHandler,
+    setShowUploadImage,
   } = useContext(StateContext);
 
   const [searchParams] = useSearchParams();
@@ -28,7 +29,7 @@ const Group = () => {
 
   useEffect(() => {
     if (!groupId) {
-      showGroupHandler(false);
+      setShowUploadImage(false);
     }
   }, [groupId]);
 

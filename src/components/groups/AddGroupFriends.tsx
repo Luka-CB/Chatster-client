@@ -61,19 +61,21 @@ const AddGroupFriends: React.FC<groupPropsIFace> = ({
           )}
           {friendsToAdd?.map((friend, i) => (
             <div className="friend" key={friend._id}>
-              <div className="col-one">
-                {friend.avatar ? (
-                  <img src={friend.avatar} alt={friend.username} />
-                ) : (
-                  <img src={DummyProfilePic} alt="dummy pic" />
-                )}
+              <div className="fr-col-one">
+                <div className="image">
+                  {friend.avatar ? (
+                    <img src={friend.avatar} alt={friend.username} />
+                  ) : (
+                    <img src={DummyProfilePic} alt="dummy pic" />
+                  )}
+                </div>
                 <h5 id="name">
                   {friend.username?.length > 17
                     ? friend.username.substring(0, 17) + "..."
                     : friend.username}
                 </h5>
               </div>
-              <div className="col-two">
+              <div className="fr-col-two">
                 <button
                   onClick={() => addMemberHandler(friend._id, i)}
                   id="add"

@@ -5,6 +5,7 @@ import { GroupContext } from "../../context/features/group";
 import { AuthContext } from "../../context/features/auth";
 import DummyGroupPic from "../../assets/images/dummy-group-pic.png";
 import { ReqContext } from "../../context/features/request";
+import Spinner from "../Spinner";
 
 export interface propsIFace {
   showSearchResult: boolean;
@@ -22,7 +23,7 @@ const SearchGroup: React.FC<propsIFace> = ({
   const { user } = useContext(AuthContext);
   const { sendGroupRequest, sendReqSuccess } = useContext(ReqContext);
 
-  const { searchedGroups, searchedGroupsCount, searchGroups } =
+  const { searchLoading, searchedGroups, searchedGroupsCount, searchGroups } =
     useContext(GroupContext);
 
   const sendRequestHandler = (groupId: string, i: number) => {
@@ -52,6 +53,7 @@ const SearchGroup: React.FC<propsIFace> = ({
             <p id="result-count">
               Result: <span>{searchedGroupsCount}</span>
             </p>
+            {searchLoading && <Spinner small={true} />}
             {searchedGroupsCount === 0 && <p id="no-match">No Match!</p>}
             {searchedGroups?.map((group, i) => {
               const isReqSent = group.requests?.some(

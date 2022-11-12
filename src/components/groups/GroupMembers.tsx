@@ -33,7 +33,7 @@ const GroupMembers = () => {
     showUploadImage,
     showUpdateGroupName,
     showDeleteModal,
-    showGroupHandler,
+    setShowGroup,
   } = useContext(StateContext);
 
   const [searchParams] = useSearchParams();
@@ -50,14 +50,14 @@ const GroupMembers = () => {
     }
 
     if (!groupId) {
-      showGroupHandler(false);
+      setShowGroup(false);
     }
   }, [groupId, removeMemberSuccess]);
 
   useEffect(() => {
     if (leaveGroupSuccess) {
       navigate("/chat");
-      showGroupHandler(false);
+      setShowGroup(false);
     }
   }, [leaveGroupSuccess]);
 

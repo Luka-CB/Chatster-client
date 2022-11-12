@@ -7,16 +7,13 @@ import { AuthContext } from "../context/features/auth";
 import { ReqContext } from "../context/features/request";
 import UploadImage from "./UploadImage";
 import { StateContext } from "../context/features/states";
-
-export interface propsIFace {
-  isActive: boolean;
-}
+import Spinner from "./Spinner";
 
 const Profile = () => {
   const [accIndex, setAccIndex] = useState<number | null>(null);
   const [rejIndex, setRejIndex] = useState<number | null>(null);
 
-  const { showUploadImage, showUploadImageHandler } = useContext(StateContext);
+  const { showUploadImage, setShowUploadImage } = useContext(StateContext);
   const { profileInfo, getProfile } = useContext(UserContext);
   const { user } = useContext(AuthContext);
   const {
@@ -24,6 +21,7 @@ const Profile = () => {
     reqCount,
     reqMsg,
     getMyRequests,
+    getReqLoading,
     accReqSuccess,
     accReqLoading,
     acceptRequest,
@@ -70,7 +68,7 @@ const Profile = () => {
             <div
               className="edit-avatar"
               title="Edit Profile Picture"
-              onClick={() => showUploadImageHandler(true)}
+              onClick={() => setShowUploadImage(true)}
             >
               <BsPencilFill id="pencil" />
             </div>
@@ -98,13 +96,9 @@ const Profile = () => {
       <div className="friend-requests">
         <h4 id="title">Friend Requests: {reqCount}</h4>
         <div className="requests">
-          <div
-            className="request-wrapper"
-            style={{
-              overflowY: requests?.length > 6 ? "scroll" : "initial",
-            }}
-          >
-            {reqMsg && <p id="no-reqs">{reqMsg}</p>}
+          <div className="request-wrapper">
+            {getReqLoading && <Spinner />}
+            {reqMsg && !getReqLoading && <p id="no-reqs">{reqMsg}</p>}
             {requests?.map((req, i) => (
               <div className="request" key={req._id}>
                 <div className="req-col-1">

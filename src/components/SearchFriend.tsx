@@ -9,6 +9,7 @@ import {
 import DummyProfilePic from "../assets/images/dummy-profile-pic.png";
 import { ReqContext } from "../context/features/request";
 import { UserContext } from "../context/features/users";
+import Spinner from "./Spinner";
 
 const SearchFriend = () => {
   const [query, setQuery] = useState("");
@@ -69,7 +70,7 @@ const SearchFriend = () => {
           </div>
           <hr />
           <div className="result">
-            {searchLoading && <p>Loading...</p>}
+            {searchLoading && <Spinner small={true} />}
             {searchResult?.map((user) => (
               <div className="user" key={user._id}>
                 <div className="info">

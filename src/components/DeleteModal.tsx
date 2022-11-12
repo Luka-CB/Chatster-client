@@ -7,13 +7,10 @@ interface propsIFace {
 }
 
 const DeleteModal: React.FC<propsIFace> = ({ text, textBold }) => {
-  const { showDeleteModalHandler } = useContext(StateContext);
+  const { setShowDeleteModal } = useContext(StateContext);
 
   return (
-    <div
-      className="del-warning-bg"
-      onClick={() => showDeleteModalHandler(false)}
-    >
+    <div className="del-warning-bg" onClick={() => setShowDeleteModal(false)}>
       <div
         className="del-warning-container"
         onClick={(e) => e.stopPropagation()}
@@ -23,7 +20,7 @@ const DeleteModal: React.FC<propsIFace> = ({ text, textBold }) => {
         </p>
         <div className="btns">
           <button id="yes">Yes</button>
-          <button id="no" onClick={() => showDeleteModalHandler(false)}>
+          <button id="no" onClick={() => setShowDeleteModal(false)}>
             No
           </button>
         </div>
