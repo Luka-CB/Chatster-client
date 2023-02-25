@@ -22,11 +22,10 @@ const Groups: React.FC<propsIFace> = ({ isActive }) => {
   const { groupsOnline, unreadGroupMsgs, setUnreadGroupMsgs } =
     useContext(SocketContext);
 
-  const { dataBaseUnreadGroupMsgs, removeUnreadGroupMsgs } = useContext(
-    UnreadGroupMsgContext
-  );
+  const { removeUnreadGroupMsgs } = useContext(UnreadGroupMsgContext);
 
-  const { showGroup, setShowGroup, setScroll } = useContext(StateContext);
+  const { showGroup, setShowGroup, setScroll, setShowChatWindow } =
+    useContext(StateContext);
   const { user } = useContext(AuthContext);
 
   const [query, setQuery] = useState("");
@@ -48,13 +47,9 @@ const Groups: React.FC<propsIFace> = ({ isActive }) => {
     return () => clearTimeout(timeOut);
   }, [query]);
 
-  useEffect(() => {
-    if (dataBaseUnreadGroupMsgs) setUnreadGroupMsgs(dataBaseUnreadGroupMsgs);
-  }, [dataBaseUnreadGroupMsgs]);
-
   const openGroupWindowHandler = (groupId: string) => {
     const filteredUnreadGroupMsgs = unreadGroupMsgs.filter(
-      (msg) => msg.groupId !== groupId && msg.recieverIds.includes(user.id)
+      (msg) => msg.groupId !== groupId && msg?.recieverIds?.includes(user.id)
     );
     setUnreadGroupMsgs(filteredUnreadGroupMsgs);
 
@@ -66,7 +61,10 @@ const Groups: React.FC<propsIFace> = ({ isActive }) => {
       pathname: "/chat",
       search: `?groupId=${groupId}`,
     });
+
     setShowGroup(true);
+
+    setShowChatWindow(true);
   };
 
   const getLatestMsgPreview = (groupId: string) => {

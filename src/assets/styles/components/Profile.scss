@@ -1,6 +1,10 @@
 .profile-container {
   width: 100%;
 
+  @media (max-width: 600px) {
+    margin-top: 50px;
+  }
+
   .profile-info {
     padding: 10px;
     display: flex;
@@ -145,12 +149,11 @@
 
         .request {
           width: 90%;
-          display: grid;
-          grid-template-columns: 2fr 1fr 2fr;
-          align-items: center;
-          justify-items: center;
           margin: 0 auto;
           margin-top: 20px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
 
           .req-col-1 {
             justify-self: start;
@@ -186,10 +189,10 @@
           }
 
           .req-col-3 {
-            justify-self: end;
             display: flex;
 
             #accept-btn {
+              width: 70px;
               border: none;
               outline: none;
               padding: 3px 10px;
@@ -210,6 +213,7 @@
             }
 
             #remove-btn {
+              width: 70px;
               border: none;
               outline: none;
               padding: 3px 10px;

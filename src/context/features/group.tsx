@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { createContext, ReactNode, useState } from "react";
 import { formatDistanceToNow } from "date-fns";
 
@@ -57,6 +57,7 @@ interface groupContextIFace {
   ) => void;
   removeGroupImage: (groupId: string) => void;
   updateGroupName: (groupId: string, groupName: string) => void;
+  deleteGroup: (groupId: string) => void;
   groups: groupsIFace[];
   group: groupsIFace;
   groupMembers: groupMembersIFace[];
@@ -80,6 +81,8 @@ interface groupContextIFace {
   updGroupNameLoading: boolean;
   updGroupNameSuccess: boolean;
   setUpdGroupNameSuccess: any;
+  delGroupLoading: boolean;
+  delGroupSuccess: boolean;
 }
 
 export const GroupContext = createContext({} as groupContextIFace);
@@ -112,6 +115,9 @@ const GroupProvider = ({ children }: childrenIFace) => {
 
   const [updGroupNameLoading, setUpdGroupNameLoading] = useState(false);
   const [updGroupNameSuccess, setUpdGroupNameSuccess] = useState(false);
+
+  const [delGroupLoading, setDelGroupLoading] = useState(false);
+  const [delGroupSuccess, setDelGroupSuccess] = useState(false);
 
   const createGroup = async (name: string) => {
     setCrGroupLoading(true);
@@ -344,6 +350,25 @@ const GroupProvider = ({ children }: childrenIFace) => {
     }
   };
 
+  const deleteGroup = async (groupId: string) => {
+    setDelGroupLoading(true);
+    setDelGroupSuccess(false);
+
+    try {
+      const { data } = await axios.delete(`/api/groups/delete/${groupId}`, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
+
+      if (data) {
+        setDelGroupLoading(false);
+        setDelGroupSuccess(true);
+      }
+    } catch (error: AxiosError | any) {
+      console.log(error);
+    }
+  };
+
   const contextData = {
     createGroup,
     getGroups,
@@ -378,6 +403,9 @@ const GroupProvider = ({ children }: childrenIFace) => {
     updGroupNameLoading,
     updGroupNameSuccess,
     setUpdGroupNameSuccess,
+    delGroupLoading,
+    delGroupSuccess,
+    deleteGroup,
   };
 
   return (

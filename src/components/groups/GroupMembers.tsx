@@ -2,16 +2,9 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { GroupContext } from "../../context/features/group";
 import DummyProfilePic from "../../assets/images/dummy-profile-pic.png";
-import GroupRequests from "./GroupRequests";
-import AddGroupFriends from "./AddGroupFriends";
 import { AuthContext } from "../../context/features/auth";
 import { SocketContext } from "../../context/features/socket";
 import { StateContext } from "../../context/features/states";
-import UploadImage from "../UploadImage";
-import UpdateGroupName from "./UpdateGroupName";
-import DeleteModal from "../DeleteModal";
-import GroupProfile from "./GroupProfile";
-import GroupPanel from "./GroupPanel";
 
 const GroupMembers = () => {
   const [removeIndex, setRemoveIndex] = useState<number | null>(null);
@@ -29,12 +22,7 @@ const GroupMembers = () => {
     removeMemberSuccess,
     leaveGroupSuccess,
   } = useContext(GroupContext);
-  const {
-    showUploadImage,
-    showUpdateGroupName,
-    showDeleteModal,
-    setShowGroup,
-  } = useContext(StateContext);
+  const { setShowGroup } = useContext(StateContext);
 
   const [searchParams] = useSearchParams();
   const groupId = searchParams.get("groupId");

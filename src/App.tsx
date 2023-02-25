@@ -3,11 +3,21 @@ import Home from "./pages/Home";
 import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
 import ChatPage from "./pages/ChatPage";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "./context/features/auth";
+import { UnreadGroupMsgContext } from "./context/features/unreadGroupMsg";
+import { UnreadMsgContext } from "./context/features/unreadMsg";
 
 const App = () => {
   const { user } = useContext(AuthContext);
+
+  const { fetchUnreadGroupMsgs } = useContext(UnreadGroupMsgContext);
+  const { fetchUnreadMsgs } = useContext(UnreadMsgContext);
+
+  useEffect(() => {
+    fetchUnreadGroupMsgs();
+    fetchUnreadMsgs();
+  }, []);
 
   return (
     <Routes>

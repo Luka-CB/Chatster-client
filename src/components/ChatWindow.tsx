@@ -27,12 +27,7 @@ const ChatWindow = () => {
   };
 
   const { user } = useContext(AuthContext);
-  const {
-    setShowUpdateGroupName,
-    showChatWindow,
-    setShowChatWindow,
-    setScroll,
-  } = useContext(StateContext);
+  const { showChatWindow, setShowChatWindow } = useContext(StateContext);
 
   const {
     liveMessages,
@@ -80,15 +75,14 @@ const ChatWindow = () => {
       getMessages(chatId);
     }
 
-    if (groupId) {
-      setShowChatWindow(true);
+    if (groupId && showChatWindow) {
       getGroupMessages(groupId);
       socket?.emit("addGroupChatUsers", {
         userId: user?.id,
         groupId,
       });
     }
-  }, [chatId, groupId]);
+  }, [chatId, groupId, showChatWindow]);
 
   useEffect(() => {
     if (chosenEmoji) {
@@ -131,7 +125,7 @@ const ChatWindow = () => {
       senderName: user?.username,
     };
 
-    if (!msgText) alert("please provide message!");
+    if (!msgText) return;
 
     createMessage(msgData);
 
@@ -175,7 +169,7 @@ const ChatWindow = () => {
       senderName: user?.username,
     };
 
-    if (!msgText) alert("please provide message!");
+    if (!msgText) return;
 
     createGroupMessage(msgData);
 
@@ -204,15 +198,21 @@ const ChatWindow = () => {
 
     setShowChatWindow(false);
     setChatId("");
-    setShowUpdateGroupName(false);
-    navigate({
-      pathname: "/chat",
-      search: ``,
-    });
+
+    if (chatId) {
+      navigate({
+        pathname: "/chat",
+        search: ``,
+      });
+    }
   };
 
   return (
-    <div className="chat-window" onClick={() => setShowEmojiWindow(false)}>
+    <div
+      className="chat-window"
+      style={showChatWindow ? { zIndex: "20" } : { zIndex: "0" }}
+      onClick={() => setShowEmojiWindow(false)}
+    >
       {showChatWindow ? (
         <>
           <div className="chat-area">
@@ -279,7 +279,6 @@ const ChatWindow = () => {
                 placeholder="write text here"
                 value={msgText}
                 onChange={(e) => setMsgText(e.target.value)}
-                // onKeyDown={(e) => e.key === "Enter" && createMsgHandler()}
               ></textarea>
               <div
                 onClick={() => setShowEmojiWindow(true)}

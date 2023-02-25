@@ -4,9 +4,18 @@ import { StateContext } from "../context/features/states";
 interface propsIFace {
   text: string;
   textBold: string;
+  deleteFunction?: () => void;
+  delSuccess?: boolean;
+  delLoading?: boolean;
 }
 
-const DeleteModal: React.FC<propsIFace> = ({ text, textBold }) => {
+const DeleteModal: React.FC<propsIFace> = ({
+  text,
+  textBold,
+  delLoading,
+  delSuccess,
+  deleteFunction,
+}) => {
   const { setShowDeleteModal } = useContext(StateContext);
 
   return (

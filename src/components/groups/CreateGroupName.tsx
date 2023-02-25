@@ -1,6 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { GroupContext } from "../../context/features/group";
-import { propsIFace } from "../Profile";
+
+interface propsIFace {
+  isActive: boolean;
+}
 
 const CreateGroupName: React.FC<propsIFace> = ({ isActive }) => {
   const [groupName, setGroupName] = useState("");

@@ -70,7 +70,7 @@ const SignIn = () => {
             Sign in with <span>Simple-Chat</span>
           </h5>
           {loginLoading && <p>Loading...</p>}
-          {loginError && <p>{loginError}</p>}
+          {loginError && <p id="login-error">{loginError}</p>}
           <form onSubmit={submitHandler}>
             <input
               type="text"

@@ -30,7 +30,7 @@ const Friends: React.FC<propsIFace> = ({ isActive }) => {
     useContext(SocketContext);
   const { getChat, chatId } = useContext(ChatContext);
   const { user } = useContext(AuthContext);
-  const { dataBaseUnreadMsgs, removeUnreadMsgs } = useContext(UnreadMsgContext);
+  const { removeUnreadMsgs } = useContext(UnreadMsgContext);
 
   const navigate = useNavigate();
 
@@ -51,12 +51,6 @@ const Friends: React.FC<propsIFace> = ({ isActive }) => {
       });
     }
   }, [chatId]);
-
-  useEffect(() => {
-    if (dataBaseUnreadMsgs) {
-      setUnreadMsgs(dataBaseUnreadMsgs);
-    }
-  }, [dataBaseUnreadMsgs]);
 
   const unfriendHandler = (friendId: string, i: number) => {
     setFrIndex(i);

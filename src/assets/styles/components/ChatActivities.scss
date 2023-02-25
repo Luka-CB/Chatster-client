@@ -28,6 +28,55 @@
 .chat-activities {
   border-right: 1px solid $light;
   position: relative;
+  width: 650px;
+
+  .mob-nav {
+    .mob-nav-logo {
+      margin: 10px;
+      width: 120px;
+    }
+
+    .menu {
+      position: absolute;
+      right: 0;
+      top: 0;
+      margin: 10px;
+      border: none;
+      outline: none;
+      background-color: transparent;
+      transition: all 0.2s ease-in-out;
+      cursor: pointer;
+
+      #menuIcon {
+        color: $light;
+        font-size: 1.5rem;
+        transition: all 0.2s ease-in-out;
+      }
+
+      .badge {
+        position: absolute;
+        top: -5px;
+        left: -25px;
+        background-color: red;
+        width: 30px;
+        border-radius: 5px;
+        color: $light;
+      }
+
+      &:hover {
+        #menuIcon {
+          color: $light-trans;
+        }
+      }
+
+      &:active {
+        #menuIcon {
+          transform: scale(0.97);
+          color: $light-trans;
+        }
+      }
+    }
+  }
 
   .navigation {
     display: flex;
@@ -82,6 +131,27 @@
         margin-left: 30px;
         cursor: pointer;
         transition: 0.2s ease-in-out;
+      }
+    }
+  }
+
+  @media (max-width: 1000px) {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+
+    .navigation {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      padding: 10px;
+
+      nav {
+        display: flex;
+        justify-content: space-around;
+        width: 60%;
       }
     }
   }

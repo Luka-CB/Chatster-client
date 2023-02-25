@@ -14,12 +14,16 @@ interface stateContextIFace {
   setShowUpdateGroupName: any;
   showDeleteModal: boolean;
   setShowDeleteModal: any;
+  showDeleteGroupModal: boolean;
+  setShowDeleteGroupModal: any;
   showChatWindow: boolean;
   setShowChatWindow: any;
   showGroupRequests: boolean;
   setShowGroupRequests: any;
   showAddFriend: boolean;
   setShowAddFriend: any;
+  showMobileNav: boolean;
+  setShowMobileNav: any;
   scroll: boolean;
   setScroll: any;
 }
@@ -32,8 +36,10 @@ const StateProvider = ({ children }: childrenIFace) => {
   const [showUploadImage, setShowUploadImage] = useState(false);
   const [showUpdateGroupName, setShowUpdateGroupName] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showDeleteGroupModal, setShowDeleteGroupModal] = useState(false);
   const [showGroupRequests, setShowGroupRequests] = useState(false);
   const [showAddFriend, setShowAddFriend] = useState(false);
+  const [showMobileNav, setShowMobileNav] = useState(false);
   const [scroll, setScroll] = useState(true);
 
   const [searchParams] = useSearchParams();
@@ -66,12 +72,16 @@ const StateProvider = ({ children }: childrenIFace) => {
     showUpdateGroupName,
     setShowDeleteModal,
     showDeleteModal,
+    setShowDeleteGroupModal,
+    showDeleteGroupModal,
     setShowChatWindow,
     showChatWindow,
     showGroupRequests,
     setShowGroupRequests,
     showAddFriend,
     setShowAddFriend,
+    showMobileNav,
+    setShowMobileNav,
     scroll,
     setScroll,
   };

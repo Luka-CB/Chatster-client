@@ -6,7 +6,7 @@ import AddGroupFriends from "./AddGroupFriends";
 import { StateContext } from "../../context/features/states";
 import UploadImage from "../UploadImage";
 import UpdateGroupName from "./UpdateGroupName";
-import DeleteModal from "../DeleteModal";
+import DeleteGroupModal from "./DeleteGroupModal";
 import GroupProfile from "./GroupProfile";
 import GroupPanel from "./GroupPanel";
 import GroupMembers from "./GroupMembers";
@@ -20,8 +20,10 @@ const Group = () => {
     setShowAddFriend,
     showUploadImage,
     showUpdateGroupName,
-    showDeleteModal,
+    showDeleteGroupModal,
     setShowUploadImage,
+    showChatWindow,
+    setShowChatWindow,
   } = useContext(StateContext);
 
   const [searchParams] = useSearchParams();
@@ -37,6 +39,11 @@ const Group = () => {
     <div className="group-container">
       <GroupProfile />
       <hr />
+      {!showChatWindow && (
+        <div className="chat-btn" onClick={() => setShowChatWindow(true)}>
+          <button id="btn">Open Chat</button>
+        </div>
+      )}
       <div className="section-two">
         <GroupPanel />
         <GroupMembers />
@@ -76,11 +83,8 @@ const Group = () => {
         <UpdateGroupName groupName={group.name} groupId={group._id} />
       )}
 
-      {showDeleteModal && (
-        <DeleteModal
-          text="Are you sure? You are deleting"
-          textBold={group.name}
-        />
+      {showDeleteGroupModal && (
+        <DeleteGroupModal textBold={group.name} groupId={groupId || ""} />
       )}
     </div>
   );

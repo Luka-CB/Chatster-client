@@ -9,6 +9,7 @@ import {
 } from "react-icons/ai";
 import { AuthContext } from "../../context/features/auth";
 import { StateContext } from "../../context/features/states";
+import { useNavigate } from "react-router-dom";
 
 const GroupProfile = () => {
   const { user } = useContext(AuthContext);
@@ -16,23 +17,27 @@ const GroupProfile = () => {
   const {
     setShowUploadImage,
     setShowUpdateGroupName,
-    setShowDeleteModal,
+    setShowDeleteGroupModal,
     setShowGroup,
     setShowGroupRequests,
     setShowAddFriend,
-    setScroll,
   } = useContext(StateContext);
+
+  const navigate = useNavigate();
 
   const isGroupAdmin = group?.admin?._id === user?.id;
 
+  const closeGroupHandler = () => {
+    setShowGroup(false);
+    navigate({
+      pathname: "/chat",
+      search: ``,
+    });
+  };
+
   return (
     <div className="group-profile">
-      <AiOutlineCloseCircle
-        id="close-icon"
-        onClick={() => {
-          setShowGroup(false);
-        }}
-      />
+      <AiOutlineCloseCircle id="close-icon" onClick={closeGroupHandler} />
       <div className="image-wrapper">
         <div className="image">
           {group?.image ? (
@@ -85,7 +90,10 @@ const GroupProfile = () => {
               <span>Add Friend</span>
             </div>
 
-            <div className="del-group" onClick={() => setShowDeleteModal(true)}>
+            <div
+              className="del-group"
+              onClick={() => setShowDeleteGroupModal(true)}
+            >
               <AiOutlineDelete id="del-icon" />
               <span>Delete Group</span>
             </div>

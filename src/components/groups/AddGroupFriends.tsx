@@ -3,6 +3,7 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 import DummyProfilePic from "../../assets/images/dummy-profile-pic.png";
 import { FriendContext } from "../../context/features/friend";
 import { GroupContext, groupMembersIFace } from "../../context/features/group";
+import { ReqContext } from "../../context/features/request";
 
 interface groupPropsIFace {
   showModal: boolean;
@@ -16,6 +17,7 @@ const AddGroupFriends: React.FC<groupPropsIFace> = ({
   groupId,
 }) => {
   const { getFriends, friends } = useContext(FriendContext);
+  const { groupRequests, getGroupRequests } = useContext(ReqContext);
   const { addMember, addMemberSuccess, getGroup, groupMembers } =
     useContext(GroupContext);
 
@@ -25,6 +27,7 @@ const AddGroupFriends: React.FC<groupPropsIFace> = ({
   useEffect(() => {
     if (showModal) {
       getFriends();
+      if (groupId) getGroupRequests(groupId);
       if (groupId) getGroup(groupId);
     }
 
@@ -35,8 +38,10 @@ const AddGroupFriends: React.FC<groupPropsIFace> = ({
   }, [showModal, addMemberSuccess, groupId]);
 
   const members = groupMembers?.map((member) => member._id);
+  const requesters = groupRequests?.map((req) => req.from._id);
   const friendsToAdd = friends?.filter(
-    (friend) => !members.includes(friend._id)
+    (friend) =>
+      !members.includes(friend._id) && !requesters.includes(friend._id)
   );
 
   const addMemberHandler = (userId: string, i: number) => {

@@ -20,8 +20,14 @@ const UpdateProfile: React.FC<propsIFace> = ({
   const [password, setPassword] = useState("");
 
   const { showDeleteModal, setShowDeleteModal } = useContext(StateContext);
-  const { updLoading, updSuccess, updError, updateProfile, getProfile } =
-    useContext(UserContext);
+  const {
+    updLoading,
+    updSuccess,
+    setUpdSuccess,
+    updError,
+    updateProfile,
+    getProfile,
+  } = useContext(UserContext);
 
   useEffect(() => {
     if (profileInfo) {
@@ -35,6 +41,7 @@ const UpdateProfile: React.FC<propsIFace> = ({
     if (updSuccess) {
       hideUpdProfile();
       getProfile();
+      setUpdSuccess(false);
     }
   }, [updSuccess]);
 

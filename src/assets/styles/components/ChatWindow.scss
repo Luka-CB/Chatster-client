@@ -1,10 +1,12 @@
 .chat-window {
   border-right: 1px solid white;
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   position: relative;
   height: 100vh;
+  min-width: 250px;
 
   .chat-info {
     position: absolute;
@@ -130,12 +132,10 @@
     position: relative;
 
     .chat-input {
-      border: 2px solid aliceblue;
-      width: 80%;
-      height: 50px;
+      width: 100%;
+      height: 100%;
       display: flex;
       justify-content: space-between;
-      border-radius: 15px;
 
       textarea {
         width: 85%;
@@ -143,19 +143,17 @@
         outline: none;
         background-color: rgb(214, 214, 214);
         text-indent: 10px;
-        border-top-left-radius: 15px;
-        border-bottom-left-radius: 15px;
         padding: 5px;
       }
 
       .emoji-btn {
-        width: 5%;
+        width: 70px;
         height: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
         background-color: rgb(214, 214, 214);
-        font-size: 1.7rem;
+        font-size: 2rem;
         color: rgb(80, 41, 5);
         cursor: pointer;
         transition: 0.2s ease-in-out;
@@ -166,16 +164,14 @@
       }
 
       .send-btn {
-        flex: 1;
+        width: 70px;
         height: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
         background-color: rgb(214, 214, 214);
-        border-top-right-radius: 15px;
-        border-bottom-right-radius: 15px;
-        border-left: 1px solid black;
-        font-size: 1.5rem;
+        // border-left: 1px solid black;
+        font-size: 2rem;
         color: #0e9e8b;
         cursor: pointer;
         transition: 0.2s ease-in-out;
@@ -191,6 +187,18 @@
       position: absolute;
       bottom: 100%;
       right: 15%;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    .chat-info {
+      display: none;
     }
   }
 }

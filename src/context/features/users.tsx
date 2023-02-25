@@ -45,12 +45,11 @@ interface userContextIFace {
   searchLoading: boolean;
   updLoading: boolean;
   updSuccess: boolean;
+  setUpdSuccess: any;
   updError: string | null;
 }
 
 export const UserContext = createContext({} as userContextIFace);
-
-const url = "http://localhost:5000";
 
 const UserProvider = ({ children }: childrenIFace) => {
   const { user } = useContext(AuthContext);
@@ -95,7 +94,7 @@ const UserProvider = ({ children }: childrenIFace) => {
     setUpdLoading(true);
 
     try {
-      const { data } = await axios.put(`$/api/users/profile/update`, userData, {
+      const { data } = await axios.put(`/api/users/profile/update`, userData, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       });
@@ -226,6 +225,7 @@ const UserProvider = ({ children }: childrenIFace) => {
     updateProfile,
     updLoading,
     updSuccess,
+    setUpdSuccess,
     updError,
     updateProfileImage,
     updProfImgLoading,

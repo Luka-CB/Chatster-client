@@ -1,0 +1,79 @@
+.mobile-navigation-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.451);
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  animation: navBg 0.3s ease-in-out;
+
+  .mobile-navigation {
+    position: absolute;
+    left: 0;
+    background-color: aliceblue;
+    width: 200px;
+    height: 100%;
+    box-shadow: 0 0 26px rgba(0, 0, 0, 0.6);
+    transition: all 0.2s ease-in-out;
+    animation: drawer 0.3s linear;
+
+    .mob-nav-logo {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .nav {
+      margin-top: 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .nav-item,
+      .nav-item-active {
+        margin-top: 80px;
+        width: 100px;
+        text-align: center;
+        padding-bottom: 5px;
+        position: relative;
+
+        .badge {
+          position: absolute;
+          top: -30px;
+          right: -15px;
+          background-color: $primary;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: $light;
+          font-family: "Courier New", Courier, monospace;
+        }
+      }
+
+      .nav-item-active {
+        border-bottom: 3px solid black;
+      }
+    }
+  }
+}
+
+@keyframes drawer {
+  0% {
+    left: -200%;
+  }
+  100% {
+    left: 0;
+  }
+}
+
+@keyframes navBg {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
