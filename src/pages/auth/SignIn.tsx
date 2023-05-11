@@ -1,13 +1,19 @@
-import authPageImg from "../../assets/images/simple-chat-pic-2.png";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import authPageImg from "../../assets/images/simple-chat-pic-2.png";
+import Logo from "../../assets/images/chatster-logo.png";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
-import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/features/auth";
+import { StateContext } from "../../context/features/states";
+import Spinner from "../../components/Spinner";
+
+const url: any = import.meta.env.VITE_APP_API_URL;
 
 const SignIn = () => {
   const { login, loginSuccess, loginError, loginLoading } =
     useContext(AuthContext);
+  const { redirectRoute, setRedirectRoute } = useContext(StateContext);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -16,16 +22,22 @@ const SignIn = () => {
 
   useEffect(() => {
     if (loginSuccess) {
-      navigate("/");
+      if (redirectRoute) {
+        navigate(redirectRoute);
+        setRedirectRoute("");
+        localStorage.removeItem("redirectRoute");
+      } else {
+        navigate("/");
+      }
     }
-  }, [loginSuccess]);
+  }, [loginSuccess, redirectRoute]);
 
   const google = () => {
-    window.open("http://localhost:5000/api/auth/google", "_self");
+    window.open(`${url}/api/auth/google`, "_self");
   };
 
   const facebook = () => {
-    window.open("http://localhost:5000/api/auth/facebook", "_self");
+    window.open(`${url}/api/auth/facebook`, "_self");
   };
 
   const submitHandler = (e: any) => {
@@ -42,12 +54,19 @@ const SignIn = () => {
   return (
     <div className="auth-container">
       <div className="logo">
-        <Link to={"/"}>Simple-Chat Logo</Link>
+        <Link to={"/"}>
+          <img src={Logo} alt="logo" />
+        </Link>
       </div>
       <div className="image">
         <img src={authPageImg} alt="Auth Page Image" />
       </div>
       <div className="auth">
+        {loginLoading ? (
+          <div className="spinner-wrapper">
+            <Spinner />
+          </div>
+        ) : null}
         <div className="oauth">
           <div onClick={google} className="oauth_btn">
             <div className="icon">

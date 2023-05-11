@@ -2,9 +2,7 @@ import DummyProfilePic from "../assets/images/dummy-profile-pic.png";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import React, { useContext, useEffect, useState } from "react";
 import { StateContext } from "../context/features/states";
-import axios from "axios";
-import { UserContext } from "../context/features/users";
-import { GroupContext } from "../context/features/group";
+import { ImageContext } from "../context/features/image";
 
 interface propsIFace {
   avatar: string | undefined;
@@ -13,134 +11,68 @@ interface propsIFace {
   upload_preset: string;
 }
 
-const UploadImage: React.FC<propsIFace> = ({
-  avatar,
-  type,
-  upload_preset,
-  groupId,
-}) => {
-  const [image, setImage] = useState<File | null>(null);
-  const [previewImage, setPreviewImage] = useState("");
-  const [url, setUrl] = useState("");
-  const [publicId, setPublicId] = useState("");
-
+const UploadImage: React.FC<propsIFace> = ({ avatar, type, groupId }) => {
+  const {
+    image,
+    setImage,
+    uploadImageLoading,
+    uploadImageSuccess,
+    setUploadImageSuccess,
+    uploadImage,
+    removeImage,
+    removeImageLoading,
+    removeImageSuccess,
+    setAddedProfImage,
+    addedProfImage,
+    setRemoveImageSuccess,
+  } = useContext(ImageContext);
   const { setShowUploadImage } = useContext(StateContext);
-  const {
-    getProfile,
-    updateProfileImage,
-    updProfImgLoading,
-    updProfImgSuccess,
-    removeProfileImage,
-    removeProfImgLoading,
-    removeProfImgSuccess,
-  } = useContext(UserContext);
-  const {
-    getGroup,
-    updateGroupImage,
-    updGroupImageLoading,
-    updGroupImageSuccess,
-    removeGroupImage,
-    removeGroupImageLoading,
-    removeGroupImageSuccess,
-  } = useContext(GroupContext);
 
-  useEffect(() => {
-    if (image) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewImage(reader.result as string);
-      };
-      reader.readAsDataURL(image);
-    } else {
-      setPreviewImage("");
-    }
-  }, [image]);
+  const handleFileInput = (file: any) => {
+    const reader = new FileReader();
 
-  useEffect(() => {
-    if (type === "user") {
-      if (url && publicId) {
-        updateProfileImage(url, publicId);
-      }
-    } else {
-      if (url && groupId && publicId) {
-        updateGroupImage(groupId, url, publicId);
-      }
-    }
-  }, [url, groupId, publicId]);
+    reader.onloadend = () => {
+      setImage(reader.result);
+    };
 
-  useEffect(() => {
-    if (updProfImgSuccess) {
-      getProfile();
-      setImage(null);
-      setUrl("");
-    }
-
-    if (updGroupImageSuccess) {
-      if (groupId) getGroup(groupId);
-      setImage(null);
-      setUrl("");
-    }
-
-    if (removeProfImgSuccess) {
-      getProfile();
-    }
-
-    if (removeGroupImageSuccess) {
-      if (groupId) getGroup(groupId);
-    }
-  }, [
-    updProfImgSuccess,
-    updGroupImageSuccess,
-    groupId,
-    removeProfImgSuccess,
-    removeGroupImageSuccess,
-  ]);
-
-  const uploadImage = async () => {
-    const imageData = new FormData();
-    if (image) imageData.append("file", image);
-    imageData.append("upload_preset", upload_preset);
-    imageData.append("cloud_name", "coolbonn");
-
-    try {
-      const { data } = await axios.post(
-        "https://api.cloudinary.com/v1_1/coolbonn/image/upload",
-        imageData
-      );
-      setUrl(data.url);
-      setPublicId(data.public_id);
-    } catch (error) {
-      console.log(error);
-    }
+    reader.readAsDataURL(file);
   };
 
+  const handleShowUploadImage = () => {
+    setShowUploadImage(false);
+    setImage("");
+  };
+
+  useEffect(() => {
+    if (uploadImageSuccess) {
+      setUploadImageSuccess(false);
+      handleShowUploadImage();
+    }
+  }, [uploadImageSuccess]);
+
+  useEffect(() => {
+    if (removeImageSuccess) {
+      setRemoveImageSuccess(false);
+      setAddedProfImage("");
+      setImage("");
+    }
+  }, [removeImageSuccess]);
+
   return (
-    <div
-      className="upload-image-bg"
-      onClick={() => {
-        setShowUploadImage(false);
-        setPreviewImage("");
-        setImage(null);
-      }}
-    >
+    <div className="upload-image-bg" onClick={handleShowUploadImage}>
       <div
         className="upload-image-container"
         onClick={(e) => e.stopPropagation()}
       >
-        <div
-          className="close-btn"
-          onClick={() => {
-            setShowUploadImage(false);
-            setPreviewImage("");
-            setImage(null);
-          }}
-        >
+        <div className="close-btn" onClick={handleShowUploadImage}>
           <AiOutlineCloseCircle id="close-icon" />
         </div>
         <div className="preview-image">
           <div className="image">
-            {previewImage ? (
-              <img src={previewImage} alt="Preview Image" />
+            {addedProfImage ? (
+              <img src={addedProfImage} alt="Preview Image" />
+            ) : image ? (
+              <img src={image} alt="Preview Image" />
             ) : avatar ? (
               <img src={avatar} alt="Avatar" />
             ) : (
@@ -153,32 +85,24 @@ const UploadImage: React.FC<propsIFace> = ({
             type="file"
             accept="image/*"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              e.target.files !== null && setImage(e.target.files[0])
+              e.target.files !== null && handleFileInput(e.target.files[0])
             }
           />
         </div>
         <div className="btns">
           <button
-            id={!image ? "upload-disabled" : "upload"}
-            onClick={uploadImage}
-            disabled={!image}
+            id="upload-btn"
+            disabled={!image || uploadImageLoading || removeImageLoading}
+            onClick={() => uploadImage()}
           >
-            {updProfImgLoading || updGroupImageLoading
-              ? "Uploading..."
-              : "Upload Image"}
+            {uploadImageLoading ? "Uploading..." : "Upload Image"}
           </button>
           <button
-            id={!avatar || previewImage ? "remove-disabled" : "remove"}
-            onClick={() =>
-              type === "user"
-                ? removeProfileImage()
-                : groupId && removeGroupImage(groupId)
-            }
-            disabled={!avatar || previewImage !== ""}
+            id="remove-btn"
+            disabled={!avatar || uploadImageLoading || removeImageLoading}
+            onClick={() => removeImage()}
           >
-            {removeProfImgLoading || removeGroupImageLoading
-              ? "Removing..."
-              : "Remove Image"}
+            {removeImageLoading ? "Removing..." : "Remove Image"}
           </button>
         </div>
       </div>

@@ -124,14 +124,7 @@ const GroupProvider = ({ children }: childrenIFace) => {
     setCrGroupSuccess(false);
 
     try {
-      const { data } = await axios.post(
-        "/api/groups/create",
-        { name },
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      );
+      const { data } = await axios.post("/api/groups/create", { name });
 
       if (data) {
         setCrGroupLoading(false);
@@ -147,9 +140,7 @@ const GroupProvider = ({ children }: childrenIFace) => {
     setGetGroupsLoading(true);
 
     try {
-      const { data } = await axios.get("/api/groups/fetch", {
-        withCredentials: true,
-      });
+      const { data } = await axios.get("/api/groups/fetch");
 
       if (data) {
         setGetGroupsLoading(false);
@@ -166,9 +157,7 @@ const GroupProvider = ({ children }: childrenIFace) => {
     setGroupLoading(true);
 
     try {
-      const { data } = await axios.get(`/api/groups/fetch-one/${groupId}`, {
-        withCredentials: true,
-      });
+      const { data } = await axios.get(`/api/groups/fetch-one/${groupId}`);
 
       if (data) {
         const groupFormated = {
@@ -190,9 +179,7 @@ const GroupProvider = ({ children }: childrenIFace) => {
     setSearchLoading(true);
 
     try {
-      const { data } = await axios.get(`/api/groups/search?q=${q}`, {
-        withCredentials: true,
-      });
+      const { data } = await axios.get(`/api/groups/search?q=${q}`);
 
       if (data) {
         setSearchLoading(false);
@@ -212,11 +199,7 @@ const GroupProvider = ({ children }: childrenIFace) => {
     try {
       const { data } = await axios.put(
         `/api/groups/add-member?groupId=${groupId}&userId=${userId}`,
-        {},
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
+        {}
       );
 
       if (data) {
@@ -235,11 +218,7 @@ const GroupProvider = ({ children }: childrenIFace) => {
     try {
       const { data } = await axios.put(
         `/api/groups/remove-member?groupId=${groupId}&userId=${userId}`,
-        {},
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
+        {}
       );
 
       if (data) {
@@ -255,14 +234,7 @@ const GroupProvider = ({ children }: childrenIFace) => {
     setLeaveGroupSuccess(false);
 
     try {
-      const { data } = await axios.put(
-        `/api/groups/leave/${groupId}`,
-        {},
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      );
+      const { data } = await axios.put(`/api/groups/leave/${groupId}`, {});
 
       if (data) {
         setLeaveGroupLoading(false);
@@ -285,11 +257,7 @@ const GroupProvider = ({ children }: childrenIFace) => {
     try {
       const { data } = await axios.put(
         `/api/groups/update_img?groupId=${groupId}`,
-        { imageUrl, publicId },
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
+        { imageUrl, publicId }
       );
 
       if (data) {
@@ -309,11 +277,7 @@ const GroupProvider = ({ children }: childrenIFace) => {
     try {
       const { data } = await axios.put(
         `/api/groups/remove_img?groupId=${groupId}`,
-        {},
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
+        {}
       );
 
       if (data) {
@@ -333,11 +297,7 @@ const GroupProvider = ({ children }: childrenIFace) => {
     try {
       const { data } = await axios.put(
         `/api/groups/update_name?groupId=${groupId}`,
-        { groupName },
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
+        { groupName }
       );
 
       if (data) {
@@ -355,10 +315,7 @@ const GroupProvider = ({ children }: childrenIFace) => {
     setDelGroupSuccess(false);
 
     try {
-      const { data } = await axios.delete(`/api/groups/delete/${groupId}`, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
+      const { data } = await axios.delete(`/api/groups/delete/${groupId}`);
 
       if (data) {
         setDelGroupLoading(false);

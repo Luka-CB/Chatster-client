@@ -38,6 +38,7 @@ interface userContextIFace {
   updateProfile: (userData: updUserData) => void;
   updateProfileImage: (imageUrl: string, publicId: string) => void;
   removeProfileImage: () => void;
+  deleteUser: () => void;
   updProfImgLoading: boolean;
   updProfImgSuccess: boolean;
   removeProfImgLoading: boolean;
@@ -47,6 +48,9 @@ interface userContextIFace {
   updSuccess: boolean;
   setUpdSuccess: any;
   updError: string | null;
+  delLoading: boolean;
+  delSuccess: boolean;
+  setDelSuccess: any;
 }
 
 export const UserContext = createContext({} as userContextIFace);
@@ -70,11 +74,12 @@ const UserProvider = ({ children }: childrenIFace) => {
   const [searchResCount, setSearchResCount] = useState(0);
   const [searchLoading, setSearchLoading] = useState(false);
 
+  const [delLoading, setDelLoading] = useState(false);
+  const [delSuccess, setDelSuccess] = useState(false);
+
   const getProfile = async () => {
     try {
-      const { data } = await axios.get(`/api/users/profile`, {
-        withCredentials: true,
-      });
+      const { data } = await axios.get(`/api/users/profile`);
 
       if (data) {
         const createdAt = formatDistanceToNow(new Date(data.createdAt));
@@ -94,10 +99,7 @@ const UserProvider = ({ children }: childrenIFace) => {
     setUpdLoading(true);
 
     try {
-      const { data } = await axios.put(`/api/users/profile/update`, userData, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
+      const { data } = await axios.put(`/api/users/profile/update`, userData);
 
       if (data) {
         setUpdLoading(false);
@@ -116,14 +118,10 @@ const UserProvider = ({ children }: childrenIFace) => {
     setUpdProfImgSuccess(false);
 
     try {
-      const { data } = await axios.put(
-        "/api/users/profile/update_prof_img",
-        { imageUrl, publicId },
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      );
+      const { data } = await axios.put("/api/users/profile/update_prof_img", {
+        imageUrl,
+        publicId,
+      });
 
       if (data) {
         setUpdProfImgLoading(false);
@@ -142,11 +140,7 @@ const UserProvider = ({ children }: childrenIFace) => {
     try {
       const { data } = await axios.put(
         "/api/users/profile/remove_prof_img",
-        {},
-        {
-          headers: { Content_Type: "application/json" },
-          withCredentials: true,
-        }
+        {}
       );
 
       if (data) {
@@ -163,10 +157,7 @@ const UserProvider = ({ children }: childrenIFace) => {
     try {
       setSearchLoading(true);
 
-      const { data } = await axios.get(`/api/users/search?q=${q}`, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
+      const { data } = await axios.get(`/api/users/search?q=${q}`);
 
       if (data) {
         const newData = data.users.map((userData: userIFace) => {
@@ -215,6 +206,23 @@ const UserProvider = ({ children }: childrenIFace) => {
     }
   };
 
+  const deleteUser = async () => {
+    setDelLoading(true);
+    setDelSuccess(false);
+
+    try {
+      const { data } = await axios.delete("/api/users/delete");
+
+      if (data) {
+        setDelLoading(false);
+        setDelSuccess(true);
+      }
+    } catch (error) {
+      setDelLoading(false);
+      console.log(error);
+    }
+  };
+
   const contextData = {
     searchResult,
     getSearchUsers,
@@ -233,6 +241,10 @@ const UserProvider = ({ children }: childrenIFace) => {
     removeProfileImage,
     removeProfImgLoading,
     removeProfImgSuccess,
+    delLoading,
+    delSuccess,
+    setDelSuccess,
+    deleteUser,
   };
 
   return (

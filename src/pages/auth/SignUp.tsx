@@ -1,12 +1,15 @@
-import authPageImg from "../../assets/images/simple-chat-pic-2.png";
-import { Link, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import authPageImg from "../../assets/images/simple-chat-pic-2.png";
+import Logo from "../../assets/images/chatster-logo.png";
 import { AuthContext } from "../../context/features/auth";
+import { StateContext } from "../../context/features/states";
+import Spinner from "../../components/Spinner";
 
 const SignUp = () => {
   const { regError, regLoading, regSuccess, register } =
     useContext(AuthContext);
-
+  const { redirectRoute, setRedirectRoute } = useContext(StateContext);
   const [errMsg, setErrMsg] = useState("");
 
   const [username, setUsername] = useState("");
@@ -18,9 +21,15 @@ const SignUp = () => {
 
   useEffect(() => {
     if (regSuccess) {
-      navigate("/");
+      if (redirectRoute) {
+        navigate(redirectRoute);
+        setRedirectRoute("");
+        localStorage.removeItem("redirectRoute");
+      } else {
+        navigate("/");
+      }
     }
-  }, [regSuccess]);
+  }, [regSuccess, redirectRoute]);
 
   const submitHandler = (e: any) => {
     e.preventDefault();
@@ -40,12 +49,19 @@ const SignUp = () => {
   return (
     <div className="auth-container">
       <div className="logo">
-        <Link to={"/"}>Simple-Chat Logo</Link>
+        <Link to={"/"}>
+          <img src={Logo} alt="logo" />
+        </Link>
       </div>
       <div className="image">
         <img src={authPageImg} alt="Auth page Image" />
       </div>
-      <div className="auth signup-auth">
+      <div className="auth">
+        {regLoading ? (
+          <div className="spinner-wrapper">
+            <Spinner />
+          </div>
+        ) : null}
         <div className="custom_auth">
           {regError && <p>{regError}</p>}
           {errMsg && <p>{errMsg}</p>}

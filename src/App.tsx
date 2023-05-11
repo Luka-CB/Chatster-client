@@ -7,6 +7,7 @@ import { useContext, useEffect } from "react";
 import { AuthContext } from "./context/features/auth";
 import { UnreadGroupMsgContext } from "./context/features/unreadGroupMsg";
 import { UnreadMsgContext } from "./context/features/unreadMsg";
+import Redirect from "./pages/Redirect";
 
 const App = () => {
   const { user } = useContext(AuthContext);
@@ -30,7 +31,11 @@ const App = () => {
         path="/signup"
         element={user?.id ? <Navigate to={"/"} /> : <SignUp />}
       />
-      <Route path="/chat" element={<ChatPage />} />
+      <Route
+        path="/chat"
+        element={!user?.id ? <Navigate to={"/"} /> : <ChatPage />}
+      />
+      <Route path="/redirect" element={<Redirect />} />
     </Routes>
   );
 };

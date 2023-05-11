@@ -1,7 +1,10 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+import Logo from "../../assets/images/chatster-logo.png";
 import { SocketContext } from "../../context/features/socket";
 import { StateContext } from "../../context/features/states";
+import { FaTimesCircle } from "react-icons/fa";
+import { useWindowSize } from "../../hooks";
 
 interface propsIFace {
   navItems: string[];
@@ -14,6 +17,8 @@ const MobileNav: React.FC<propsIFace> = ({
   activeNavItem,
   navigationHandler,
 }) => {
+  const windowSize = useWindowSize();
+
   const { unreadGroupMsgs, unreadMsgs } = useContext(SocketContext);
   const { setShowMobileNav } = useContext(StateContext);
 
@@ -28,9 +33,15 @@ const MobileNav: React.FC<propsIFace> = ({
       onClick={() => setShowMobileNav(false)}
     >
       <div className="mobile-navigation" onClick={(e) => e.stopPropagation()}>
+        {windowSize <= 400 && window.innerWidth <= 400 ? (
+          <FaTimesCircle
+            id="close-icon"
+            onClick={() => setShowMobileNav(false)}
+          />
+        ) : null}
         <div className="mob-nav-logo">
           <Link to={"/"}>
-            <h1>LOGO</h1>
+            <img src={Logo} alt="logo" />
           </Link>
         </div>
         <nav className="nav">

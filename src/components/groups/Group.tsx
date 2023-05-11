@@ -10,8 +10,11 @@ import DeleteGroupModal from "./DeleteGroupModal";
 import GroupProfile from "./GroupProfile";
 import GroupPanel from "./GroupPanel";
 import GroupMembers from "./GroupMembers";
+import { useWindowSize } from "../../hooks";
 
 const Group = () => {
+  const windowSize = useWindowSize();
+
   const { getGroup, group } = useContext(GroupContext);
   const {
     showGroupRequests,
@@ -45,7 +48,7 @@ const Group = () => {
         </div>
       )}
       <div className="section-two">
-        <GroupPanel />
+        {windowSize > 500 && window.innerWidth > 500 ? <GroupPanel /> : null}
         <GroupMembers />
       </div>
 

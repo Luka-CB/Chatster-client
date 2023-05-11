@@ -3,6 +3,7 @@ import { StateContext } from "../context/features/states";
 import { BsFillMenuButtonWideFill } from "react-icons/bs";
 import Friends from "./Friends";
 import Groups from "./groups/Groups";
+import Logo from "../assets/images/chatster-logo-var-2-with-shadow.png";
 import MobileNav from "./navigation/MobileNav";
 import RegularNav from "./navigation/RegularNav";
 import Profile from "./Profile";
@@ -10,6 +11,7 @@ import { Link } from "react-router-dom";
 import { SocketContext } from "../context/features/socket";
 import { UnreadGroupMsgContext } from "../context/features/unreadGroupMsg";
 import { UnreadMsgContext } from "../context/features/unreadMsg";
+import { useWindowSize } from "../hooks";
 
 const navItems = ["Profile", "Friends", "Groups"];
 
@@ -18,7 +20,7 @@ const ChatActivities = () => {
   const [isFriendsActive, setIsFriendsActive] = useState(false);
   const [isGroupsActive, setIsGroupsActive] = useState(false);
 
-  const [windowSize, setWindowSize] = useState<number | string>("");
+  const windowSize = useWindowSize();
 
   const [activeNavItem, setActiveNavItem] = useState(
     JSON.parse(localStorage.getItem("activeNavItem") || "Profile")
@@ -66,12 +68,6 @@ const ChatActivities = () => {
   });
 
   useEffect(() => {
-    window.addEventListener("resize", () => {
-      setWindowSize(window.innerWidth);
-    });
-  }, [window]);
-
-  useEffect(() => {
     fetchUnreadGroupMsgs();
     fetchUnreadMsgs();
   }, []);
@@ -92,7 +88,7 @@ const ChatActivities = () => {
         <div className="mob-nav">
           <div className="mob-nav-logo">
             <Link to={"/"}>
-              <h1>LOGO</h1>
+              <img src={Logo} alt="logo" />
             </Link>
           </div>
           <button

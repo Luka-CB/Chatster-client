@@ -9,6 +9,7 @@ import MessageProvider from "./features/message";
 import GroupProvider from "./features/group";
 import UnreadMsgProvider from "./features/unreadMsg";
 import UnreadGroupMsgProvider from "./features/unreadGroupMsg";
+import UploadImageProvider from "./features/image";
 
 const ContextProvider = ({ children }: any) => {
   return (
@@ -23,7 +24,7 @@ const ContextProvider = ({ children }: any) => {
                     <MessageProvider>
                       <UnreadMsgProvider>
                         <UnreadGroupMsgProvider>
-                          {children}
+                          <UploadImageProvider>{children}</UploadImageProvider>
                         </UnreadGroupMsgProvider>
                       </UnreadMsgProvider>
                     </MessageProvider>

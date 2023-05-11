@@ -36,11 +36,7 @@ const UnreadGroupMsgProvider = ({ children }: childrenIFace) => {
     try {
       const { data } = await axios.post(
         "/api/unread-group-msgs/create",
-        msgData,
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
+        msgData
       );
 
       if (data) setCrUnreadGroupMsgSuccess(true);
@@ -51,9 +47,7 @@ const UnreadGroupMsgProvider = ({ children }: childrenIFace) => {
 
   const fetchUnreadGroupMsgs = async () => {
     try {
-      const { data } = await axios.get(`/api/unread-group-msgs/fetch`, {
-        withCredentials: true,
-      });
+      const { data } = await axios.get(`/api/unread-group-msgs/fetch`);
 
       if (data) setDataBaseUnreadGroupMsgs(data);
     } catch (error) {
@@ -63,9 +57,7 @@ const UnreadGroupMsgProvider = ({ children }: childrenIFace) => {
 
   const removeUnreadGroupMsgs = async (groupId: string) => {
     try {
-      await axios.delete(`/api/unread-group-msgs/remove/${groupId}`, {
-        withCredentials: true,
-      });
+      await axios.delete(`/api/unread-group-msgs/remove/${groupId}`);
     } catch (error) {
       console.log(error);
     }

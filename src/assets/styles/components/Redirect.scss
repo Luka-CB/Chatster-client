@@ -1,0 +1,18 @@
+.redirect-container {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+
+  .spinner-text {
+    width: 250px;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 70px;
+    color: aliceblue;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+  }
+}

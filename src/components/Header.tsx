@@ -1,5 +1,6 @@
 import { useContext, useEffect } from "react";
-import DummyProfPic from "../assets/images/Dummy-profile-pic.png";
+import DummyProfPic from "../assets/images/dummy-profile-pic.png";
+import Logo from "../assets/images/chatster-logo-var-2-with-shadow.png";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/features/auth";
 
@@ -22,9 +23,16 @@ const Header = () => {
     localStorage.removeItem("userInfo");
   };
 
+  const navigationHandler = () => {
+    navigate("/signin");
+    localStorage.removeItem("redirectRoute");
+  };
+
   return (
     <div className="header">
-      <h1>Logo</h1>
+      <div className="logo">
+        <img src={Logo} alt="logo" />
+      </div>
       {user?.id ? (
         <div className="loggedin">
           <p onClick={user?.providerId ? logoutOauth : () => logout()}>
@@ -39,8 +47,8 @@ const Header = () => {
           </div>
         </div>
       ) : (
-        <div className="loggedout">
-          <Link to={"/signin"}>Sign In</Link>
+        <div className="loggedout" onClick={navigationHandler}>
+          <p>Sign In</p>
         </div>
       )}
     </div>

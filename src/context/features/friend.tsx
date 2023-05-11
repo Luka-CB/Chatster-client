@@ -1,6 +1,5 @@
 import axios from "axios";
 import { createContext, ReactNode, useState } from "react";
-import { formatDistanceToNow } from "date-fns";
 
 interface childrenIFace {
   children: ReactNode;
@@ -34,9 +33,7 @@ const FriendProvider = ({ children }: childrenIFace) => {
     try {
       setGetFriendsLoading(true);
 
-      const { data } = await axios.get("/api/friends/fetch-all", {
-        withCredentials: true,
-      });
+      const { data } = await axios.get("/api/friends/fetch-all");
 
       if (data) {
         setGetFriendsLoading(false);
@@ -53,11 +50,7 @@ const FriendProvider = ({ children }: childrenIFace) => {
     setUnfrSuccess(false);
 
     try {
-      const { data } = await axios.put(
-        `/api/friends/remove/${friendId}`,
-        {},
-        { withCredentials: true }
-      );
+      const { data } = await axios.put(`/api/friends/remove/${friendId}`, {});
 
       if (data) {
         setUnfrSuccess(true);

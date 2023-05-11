@@ -12,6 +12,8 @@ interface stateContextIFace {
   setShowUploadImage: any;
   showUpdateGroupName: boolean;
   setShowUpdateGroupName: any;
+  setShowUpdateProfile: any;
+  showUpdateProfile: boolean;
   showDeleteModal: boolean;
   setShowDeleteModal: any;
   showDeleteGroupModal: boolean;
@@ -26,6 +28,8 @@ interface stateContextIFace {
   setShowMobileNav: any;
   scroll: boolean;
   setScroll: any;
+  redirectRoute: string;
+  setRedirectRoute: any;
 }
 
 export const StateContext = createContext({} as stateContextIFace);
@@ -34,6 +38,7 @@ const StateProvider = ({ children }: childrenIFace) => {
   const [showChatWindow, setShowChatWindow] = useState(false);
   const [showGroup, setShowGroup] = useState(false);
   const [showUploadImage, setShowUploadImage] = useState(false);
+  const [showUpdateProfile, setShowUpdateProfile] = useState(false);
   const [showUpdateGroupName, setShowUpdateGroupName] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showDeleteGroupModal, setShowDeleteGroupModal] = useState(false);
@@ -41,6 +46,11 @@ const StateProvider = ({ children }: childrenIFace) => {
   const [showAddFriend, setShowAddFriend] = useState(false);
   const [showMobileNav, setShowMobileNav] = useState(false);
   const [scroll, setScroll] = useState(true);
+  const [redirectRoute, setRedirectRoute] = useState(
+    localStorage.getItem("redirectRoute")
+      ? JSON.parse(localStorage.getItem("redirectRoute") || "")
+      : ""
+  );
 
   const [searchParams] = useSearchParams();
   const groupId = searchParams.get("groupId");
@@ -50,7 +60,7 @@ const StateProvider = ({ children }: childrenIFace) => {
   }, [groupId]);
 
   useEffect(() => {
-    if (showGroup) {
+    if (showGroup || showUpdateProfile || showUploadImage) {
       document.body.style.overflow = "hidden";
       setScroll(false);
     } else {
@@ -61,7 +71,7 @@ const StateProvider = ({ children }: childrenIFace) => {
     return () => {
       document.body.style.overflow = "unset";
     };
-  }, [showGroup]);
+  }, [showGroup, showUpdateProfile, showUploadImage]);
 
   const contextData = {
     setShowGroup,
@@ -70,6 +80,8 @@ const StateProvider = ({ children }: childrenIFace) => {
     showUploadImage,
     setShowUpdateGroupName,
     showUpdateGroupName,
+    setShowUpdateProfile,
+    showUpdateProfile,
     setShowDeleteModal,
     showDeleteModal,
     setShowDeleteGroupModal,
@@ -84,6 +96,8 @@ const StateProvider = ({ children }: childrenIFace) => {
     setShowMobileNav,
     scroll,
     setScroll,
+    redirectRoute,
+    setRedirectRoute,
   };
 
   return (

@@ -33,7 +33,10 @@
   .mob-nav {
     .mob-nav-logo {
       margin: 10px;
-      width: 120px;
+
+      img {
+        width: 170px;
+      }
     }
 
     .menu {
@@ -80,9 +83,20 @@
 
   .navigation {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     width: 100%;
     padding: 10px;
+    position: relative;
+
+    .logo {
+      position: absolute;
+      left: 0;
+      margin: 0 10px;
+
+      img {
+        width: 150px;
+      }
+    }
 
     nav {
       display: flex;
@@ -144,7 +158,7 @@
 
     .navigation {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       width: 100%;
       padding: 10px;
 

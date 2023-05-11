@@ -9,6 +9,16 @@ const Home = () => {
 
   const navigate = useNavigate();
 
+  const navigationHandler = () => {
+    if (user?.id) {
+      navigate("/chat");
+      localStorage.setItem("activeNavItem", JSON.stringify("Profile"));
+    } else {
+      navigate("/signin");
+      localStorage.setItem("redirectRoute", JSON.stringify("/chat"));
+    }
+  };
+
   return (
     <div className="home-container">
       <Header />
@@ -28,19 +38,7 @@ const Home = () => {
               consectetur eaque perferendis fugit nulla. Incidunt praesentium
               dolore nulla.
             </p>
-            <button
-              onClick={() =>
-                user?.id
-                  ? (navigate("/chat"),
-                    localStorage.setItem(
-                      "activeNavItem",
-                      JSON.stringify("Profile")
-                    ))
-                  : navigate("/signin")
-              }
-            >
-              Start Chat Now
-            </button>
+            <button onClick={navigationHandler}>Start Chat Now</button>
           </div>
         </div>
         <div className="col_2">

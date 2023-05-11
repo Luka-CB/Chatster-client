@@ -20,7 +20,6 @@ interface chatContextIFace {
   chatId: string;
   setChatId: any;
   getChat: (chatId: string) => void;
-  getChatLoading: boolean;
 }
 
 export const ChatContext = createContext({} as chatContextIFace);
@@ -28,13 +27,9 @@ export const ChatContext = createContext({} as chatContextIFace);
 const ChatProvider = ({ children }: childrenIFace) => {
   const [chatId, setChatId] = useState("");
 
-  const [getChatLoading, setGetChatLoading] = useState(false);
-
   const getChat = async (userId: string) => {
     try {
-      const { data } = await axios.get(`/api/chats/fetch?userId=${userId}`, {
-        withCredentials: true,
-      });
+      const { data } = await axios.get(`/api/chats/fetch?userId=${userId}`);
 
       if (data) {
         setChatId(data);
@@ -48,7 +43,6 @@ const ChatProvider = ({ children }: childrenIFace) => {
     getChat,
     chatId,
     setChatId,
-    getChatLoading,
   };
 
   return (

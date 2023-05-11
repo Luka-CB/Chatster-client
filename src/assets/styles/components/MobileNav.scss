@@ -6,21 +6,45 @@
   width: 100%;
   height: 100%;
   z-index: 2;
-  animation: navBg 0.3s ease-in-out;
+  animation: fade 0.3s ease-in-out;
 
   .mobile-navigation {
     position: absolute;
     left: 0;
     background-color: aliceblue;
-    width: 200px;
+    width: 300px;
     height: 100%;
     box-shadow: 0 0 26px rgba(0, 0, 0, 0.6);
     transition: all 0.2s ease-in-out;
     animation: drawer 0.3s linear;
 
+    @media (max-width: 400px) {
+      width: 100%;
+    }
+
+    #close-icon {
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: 5px;
+      font-size: 1.6rem;
+      color: $danger;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        color: $danger-hover;
+      }
+    }
+
     .mob-nav-logo {
-      text-align: center;
-      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      margin-top: 60px;
+
+      img {
+        width: 150px;
+      }
     }
 
     .nav {
@@ -66,14 +90,5 @@
   }
   100% {
     left: 0;
-  }
-}
-
-@keyframes navBg {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
   }
 }

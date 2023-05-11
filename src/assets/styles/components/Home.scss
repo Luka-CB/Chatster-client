@@ -4,13 +4,19 @@
   transition: 0.2s ease-in-out;
 
   .header {
-    width: 70%;
+    width: 95%;
     margin: 0 auto;
     padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     transition: 0.2s ease-in-out;
+
+    .logo {
+      img {
+        width: 250px;
+      }
+    }
 
     .loggedin {
       display: flex;
@@ -105,6 +111,60 @@
       min-width: 250px;
     }
 
+    @media (max-width: 600px) {
+      padding: 10px;
+
+      .logo {
+        img {
+          width: 120px;
+        }
+      }
+
+      .loggedin {
+        p {
+          font-size: small;
+        }
+
+        .profile_pic {
+          width: 55px;
+          height: 55px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 3px 3px 8px black;
+          transition: 0.2s ease-in-out;
+
+          img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+            transition: 0.2s ease-in-out;
+          }
+        }
+      }
+
+      .loggedout {
+        border: 1px solid $light;
+        width: 75px;
+        height: 75px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $light;
+        box-shadow: 3px 3px 8px black;
+        cursor: pointer;
+        transition: 0.2s ease-in-out;
+
+        &:hover {
+          color: white;
+          box-shadow: 1px 1px 8px #06bddd71;
+        }
+      }
+    }
+
     @media (max-width: 350px) {
       .loggedin {
         display: flex;
@@ -138,7 +198,7 @@
 
   .wrapper {
     width: 95%;
-    min-height: 100vh;
+    height: 80vh;
     margin: auto;
     position: relative;
     transition: 0.2s ease-in-out;
@@ -299,21 +359,26 @@
           border: unset;
           box-shadow: none;
           align-items: center;
+          margin-top: 30px;
 
           h1 {
-            @media (max-width: 500px) {
-              font-size: 1.9rem;
-            }
+            font-size: 1.5rem;
           }
 
           .image {
             display: block;
             width: 100%;
             text-align: center;
+            margin-top: 40px;
 
             img {
-              width: 80%;
+              width: 60%;
             }
+          }
+
+          p {
+            font-size: small;
+            line-height: initial;
           }
         }
       }

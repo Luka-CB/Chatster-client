@@ -217,9 +217,11 @@ const ChatWindow = () => {
         <>
           <div className="chat-area">
             {getMsgLoading && <Spinner />}
-            <div onClick={chatToggleHandler} className="close-chat">
-              <AiOutlineClose id="close-icon" />
-              <span>close chat</span>
+            <div className="chat-header">
+              <div onClick={chatToggleHandler} className="close-chat">
+                <AiOutlineClose id="close-icon" />
+                <span>close chat</span>
+              </div>
             </div>
             <ScrollToBottom className="scroll-wrapper">
               <div className="msg-wrapper">

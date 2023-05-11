@@ -60,12 +60,7 @@ const GroupMembers = () => {
   );
   return (
     <div className="col-two">
-      <div
-        className="members-wrapper"
-        style={{
-          overflowY: groupMembers?.length > 7 ? "scroll" : "initial",
-        }}
-      >
+      <div className="members-wrapper">
         <div id="member-count">Members: {groupMembers?.length}</div>
         <div className="members">
           {membersFormated?.map((member, i) => {

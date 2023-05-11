@@ -31,10 +31,7 @@ const UnreadMsgProvider = ({ children }: childrenIFace) => {
     setCrUnreadMsgSuccess(false);
 
     try {
-      const { data } = await axios.post("/api/unread-msgs/create", msgData, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
+      const { data } = await axios.post("/api/unread-msgs/create", msgData);
 
       if (data) setCrUnreadMsgSuccess(true);
     } catch (error) {
@@ -44,9 +41,7 @@ const UnreadMsgProvider = ({ children }: childrenIFace) => {
 
   const fetchUnreadMsgs = async () => {
     try {
-      const { data } = await axios.get("/api/unread-msgs/fetch", {
-        withCredentials: true,
-      });
+      const { data } = await axios.get("/api/unread-msgs/fetch");
 
       if (data) setDataBaseUnreadMsgs(data);
     } catch (error) {
@@ -56,9 +51,7 @@ const UnreadMsgProvider = ({ children }: childrenIFace) => {
 
   const removeUnreadMsgs = async (senderId: string) => {
     try {
-      await axios.delete(`/api/unread-msgs/remove/${senderId}`, {
-        withCredentials: true,
-      });
+      await axios.delete(`/api/unread-msgs/remove/${senderId}`);
     } catch (error) {
       console.log(error);
     }

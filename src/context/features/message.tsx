@@ -86,18 +86,11 @@ const MessageProvider = ({ children }: childrenIFace) => {
     });
 
     try {
-      const { data } = await axios.post(
-        "/api/messages/create",
-        {
-          message: msgData.message,
-          date: msgData.date,
-          chatId: msgData.chatId,
-        },
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      );
+      const { data } = await axios.post("/api/messages/create", {
+        message: msgData.message,
+        date: msgData.date,
+        chatId: msgData.chatId,
+      });
 
       if (data) {
         setCreateMsgSuccess(true);
@@ -125,18 +118,11 @@ const MessageProvider = ({ children }: childrenIFace) => {
     }
 
     try {
-      const { data } = await axios.post(
-        "/api/messages/create-group-message",
-        {
-          message: msgData.message,
-          date: msgData.date,
-          groupId: msgData.groupId,
-        },
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      );
+      const { data } = await axios.post("/api/messages/create-group-message", {
+        message: msgData.message,
+        date: msgData.date,
+        groupId: msgData.groupId,
+      });
 
       if (data) {
         setCreateMsgSuccess(true);
@@ -150,9 +136,7 @@ const MessageProvider = ({ children }: childrenIFace) => {
     setGetMsgLoading(true);
 
     try {
-      const { data } = await axios.get(`/api/messages/fetch/${chatId}`, {
-        withCredentials: true,
-      });
+      const { data } = await axios.get(`/api/messages/fetch/${chatId}`);
 
       if (data) {
         setGetMsgLoading(false);
@@ -170,10 +154,7 @@ const MessageProvider = ({ children }: childrenIFace) => {
 
     try {
       const { data } = await axios.get(
-        `/api/messages/fetch-group-messages/${groupId}`,
-        {
-          withCredentials: true,
-        }
+        `/api/messages/fetch-group-messages/${groupId}`
       );
 
       if (data) {

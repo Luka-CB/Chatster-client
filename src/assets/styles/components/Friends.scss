@@ -128,4 +128,60 @@
       }
     }
   }
+
+  @media (max-width: 500px) {
+    .count {
+      position: relative;
+      top: 50px;
+      left: 100px;
+      background-color: $light;
+      width: 150px;
+      text-align: center;
+      border-radius: 15px;
+      padding: 0 10px;
+      z-index: 1;
+    }
+
+    .friends-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      #no-friends {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        color: $danger-hover;
+        text-shadow: 0 0 1px $light;
+        letter-spacing: 3px;
+      }
+
+      .friend {
+        margin: 40px 0;
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.13);
+        width: 250px;
+        padding: 10px;
+        border-radius: 5px;
+        flex-direction: column;
+
+        .col-1 {
+          width: 100%;
+          justify-content: space-around;
+        }
+
+        .col-2 {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 25px;
+          width: 100%;
+
+          button {
+            width: 100px;
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
 }

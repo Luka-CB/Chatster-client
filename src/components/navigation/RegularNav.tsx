@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+import Logo from "../../assets/images/chatster-logo-var-2-with-shadow.png";
 import { SocketContext } from "../../context/features/socket";
 
 interface propsIFace {
@@ -19,7 +20,7 @@ const RegularNav: React.FC<propsIFace> = ({
     <div className="navigation">
       <div className="logo">
         <Link to={"/"}>
-          <h1>LOGO</h1>
+          <img src={Logo} alt="logo" />
         </Link>
       </div>
       <nav>

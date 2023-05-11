@@ -8,12 +8,19 @@ import { ReqContext } from "../context/features/request";
 import UploadImage from "./UploadImage";
 import { StateContext } from "../context/features/states";
 import Spinner from "./Spinner";
+import { ImageContext } from "../context/features/image";
 
 const Profile = () => {
   const [accIndex, setAccIndex] = useState<number | null>(null);
   const [rejIndex, setRejIndex] = useState<number | null>(null);
 
-  const { showUploadImage, setShowUploadImage } = useContext(StateContext);
+  const { addedProfImage } = useContext(ImageContext);
+  const {
+    showUploadImage,
+    setShowUploadImage,
+    showUpdateProfile,
+    setShowUpdateProfile,
+  } = useContext(StateContext);
   const { profileInfo, getProfile } = useContext(UserContext);
   const { user } = useContext(AuthContext);
   const {
@@ -28,8 +35,6 @@ const Profile = () => {
     rejReqSuccess,
     rejectRequest,
   } = useContext(ReqContext);
-
-  const [showUpdateProfile, setShowUpdateProfile] = useState(false);
 
   useEffect(() => {
     getProfile();
@@ -60,7 +65,9 @@ const Profile = () => {
       <div className="profile-info">
         <div className="avatar">
           <div className="image">
-            {profileInfo?.avatar ? (
+            {addedProfImage ? (
+              <img src={addedProfImage} alt="temp Image" />
+            ) : profileInfo?.avatar ? (
               <img src={profileInfo.avatar} alt={profileInfo.username} />
             ) : (
               <img src={DummyProfilePic} alt="Dummy Profile Picture" />

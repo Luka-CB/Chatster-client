@@ -64,4 +64,26 @@
     cursor: default;
     transition: 0.2s ease-in-out;
   }
+
+  @media (max-width: 500px) {
+    margin: 50px auto;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+
+    input {
+      width: 100%;
+      border-right: none;
+    }
+
+    #cr-btn {
+      border: 1px solid $light;
+      border-left: none;
+    }
+
+    #cr-btn-disabled {
+      border: 1px solid $light;
+      border-left: none;
+    }
+  }
 }

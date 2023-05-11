@@ -8,7 +8,7 @@
   .profile-info {
     padding: 10px;
     display: flex;
-    margin-top: 20px;
+    margin-top: 40px;
 
     .avatar {
       width: 30%;
@@ -112,6 +112,22 @@
         }
       }
     }
+
+    @media (max-width: 500px) {
+      flex-direction: column;
+      align-items: center;
+
+      .avatar {
+        width: 100%;
+      }
+
+      .info {
+        margin-left: 0;
+        margin-top: 10px;
+        align-items: center;
+        text-align: center;
+      }
+    }
   }
 
   .friend-requests {
@@ -123,21 +139,26 @@
       left: 100px;
       color: black;
       background-color: $light;
-      width: 180px;
+      width: 200px;
       text-align: center;
       padding: 0 10px;
       border-radius: 20px;
+
+      @media (max-width: 400px) {
+        left: 10px;
+      }
     }
 
     .requests {
       border-top: 1px solid $light;
 
       .request-wrapper {
-        margin-top: 10px;
+        margin: 40px 0;
         position: relative;
         min-height: 60vh;
 
         #no-reqs {
+          text-align: center;
           position: absolute;
           left: 50%;
           top: 50%;
@@ -229,6 +250,44 @@
                 box-shadow: 1px 1px 5px $danger-hover;
                 background-color: $danger-hover;
                 color: $light;
+              }
+            }
+          }
+
+          @media (max-width: 600px) {
+            flex-direction: column;
+            width: 250px;
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.171);
+            padding: 10px;
+            border-radius: 5px;
+
+            .req-col-1 {
+              display: flex;
+              justify-content: space-around;
+              width: 100%;
+
+              #name {
+                margin-left: 10px;
+                color: $light;
+                font-weight: 400;
+                word-break: break-all;
+              }
+            }
+
+            .req-col-2 {
+              margin-top: 10px;
+              width: 100%;
+            }
+
+            .req-col-3 {
+              margin-top: 15px;
+
+              #accept-btn {
+                width: 100px;
+              }
+
+              #remove-btn {
+                width: 100px;
               }
             }
           }

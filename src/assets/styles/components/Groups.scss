@@ -41,6 +41,7 @@
           justify-content: space-between;
           align-items: center;
           margin-top: 20px;
+          box-shadow: 0 0 3px rgba(0, 0, 0, 0.075);
           padding: 5px 20px;
           border-radius: 10px;
           cursor: pointer;
@@ -116,6 +117,34 @@
 
           &:hover {
             background-color: $primary-trans;
+          }
+        }
+      }
+
+      @media (max-width: 500px) {
+        .groups {
+          width: 100%;
+
+          #no-groups {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: $danger-hover;
+            text-shadow: 0 0 1px $light;
+            letter-spacing: 3px;
+          }
+
+          .group {
+            flex-direction: column-reverse;
+            min-width: 200px;
+            margin: 40px 0;
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.116);
+            padding: 10px;
+
+            .info {
+              margin-top: 20px;
+            }
           }
         }
       }

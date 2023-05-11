@@ -4,19 +4,32 @@
   position: absolute;
   top: 0;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fade 200ms ease-in;
 
   .del-warning-container {
     background-color: $light-trans;
     backdrop-filter: blur(18px);
-    width: 70%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    width: 450px;
+    min-width: 250px;
     padding: 20px;
     border: 2px solid $danger;
+    position: relative;
     border-radius: 20px;
     box-shadow: 0 0 40px rgb(53, 52, 52);
+    animation: grow 200ms linear;
+
+    .spinner-wrapper {
+      background-color: rgba(0, 0, 0, 0.666);
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-radius: 20px;
+    }
 
     #warn-text {
       text-align: center;
@@ -69,6 +82,31 @@
         &:hover {
           color: black;
           background-color: transparent;
+        }
+      }
+    }
+
+    @media (max-width: 600px) {
+      width: 100%;
+      border-radius: unset;
+      border-left: unset;
+      border-right: unset;
+
+      @media (max-width: 400px) {
+        #warn-text {
+          font-size: 1.1rem;
+
+          b {
+            font-size: 1.3rem;
+          }
+        }
+
+        .btns {
+          width: 250px;
+
+          button {
+            width: 100px;
+          }
         }
       }
     }

@@ -3,7 +3,6 @@ import {
   ReactNode,
   useContext,
   useEffect,
-  useRef,
   useState,
 } from "react";
 import { io, Socket } from "socket.io-client";
@@ -79,8 +78,10 @@ const SocketProvider = ({ children }: childrenIFace) => {
   const [searchParams] = useSearchParams();
   const groupId = searchParams.get("groupId");
 
+  const url: any = import.meta.env.VITE_APP_API_URL;
+
   useEffect(() => {
-    setSocket(io("http://localhost:5000"));
+    setSocket(io(url));
   }, []);
 
   const { user } = useContext(AuthContext);

@@ -77,10 +77,7 @@ const RequestProvider = ({ children }: childrenIFace) => {
     try {
       const { data } = await axios.post(
         `/api/requests/create?userId=${userId}`,
-        {},
-        {
-          withCredentials: true,
-        }
+        {}
       );
 
       if (data) {
@@ -95,9 +92,7 @@ const RequestProvider = ({ children }: childrenIFace) => {
     try {
       setGetReqLoading(true);
 
-      const { data } = await axios.get("/api/requests/fetch-my", {
-        withCredentials: true,
-      });
+      const { data } = await axios.get("/api/requests/fetch-my");
 
       if (data) {
         const reqs = data.requests?.map((req: reqIFace) => {
@@ -121,13 +116,7 @@ const RequestProvider = ({ children }: childrenIFace) => {
     setAccReqLoading(true);
 
     try {
-      const { data } = await axios.put(
-        `/api/requests/accept/${reqId}`,
-        {},
-        {
-          withCredentials: true,
-        }
-      );
+      const { data } = await axios.put(`/api/requests/accept/${reqId}`, {});
 
       if (data) {
         setAccReqLoading(false);
@@ -144,9 +133,7 @@ const RequestProvider = ({ children }: childrenIFace) => {
     setRejReqLoading(true);
 
     try {
-      const { data } = await axios.delete(`/api/requests/reject/${reqId}`, {
-        withCredentials: true,
-      });
+      const { data } = await axios.delete(`/api/requests/reject/${reqId}`);
 
       if (data) {
         setRejReqSuccess(true);
@@ -164,11 +151,7 @@ const RequestProvider = ({ children }: childrenIFace) => {
     try {
       const { data } = await axios.post(
         `/api/requests/group-req?groupId=${groupId}`,
-        {},
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
+        {}
       );
 
       if (data) {
@@ -182,8 +165,7 @@ const RequestProvider = ({ children }: childrenIFace) => {
   const getGroupRequests = async (groupId: string) => {
     try {
       const { data } = await axios.get(
-        `/api/requests/fetch-group-reqs/${groupId}`,
-        { withCredentials: true }
+        `/api/requests/fetch-group-reqs/${groupId}`
       );
 
       if (data) {
@@ -199,10 +181,7 @@ const RequestProvider = ({ children }: childrenIFace) => {
 
     try {
       const { data } = await axios.put(
-        `/api/requests/accept-group-req/${reqId}`,
-        {
-          withCredentials: true,
-        }
+        `/api/requests/accept-group-req/${reqId}`
       );
 
       if (data) {
@@ -218,10 +197,7 @@ const RequestProvider = ({ children }: childrenIFace) => {
 
     try {
       const { data } = await axios.put(
-        `/api/requests/reject-group-req/${reqId}`,
-        {
-          withCredentials: true,
-        }
+        `/api/requests/reject-group-req/${reqId}`
       );
 
       if (data) {

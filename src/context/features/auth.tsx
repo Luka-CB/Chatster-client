@@ -1,5 +1,5 @@
-import axios, { AxiosError } from "axios";
 import { createContext, ReactNode, useEffect, useState } from "react";
+import axios from "../../utils";
 
 interface childrenIFace {
   children: ReactNode;
@@ -36,8 +36,6 @@ interface authContextIFace {
   loginSuccess: boolean;
 }
 
-const url = "http://localhost:5000";
-
 export const AuthContext = createContext({} as authContextIFace);
 
 const AuthProvider = ({ children }: childrenIFace) => {
@@ -62,14 +60,7 @@ const AuthProvider = ({ children }: childrenIFace) => {
   }, []);
 
   const getOauthUser = async () => {
-    const res = await fetch(`/api/auth/user-data`, {
-      method: "GET",
-      credentials: "include",
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) console.log("something went wrong");
+    const { data } = await axios.get(`/api/auth/user-data`);
 
     if (data) {
       localStorage.setItem("userInfo", JSON.stringify(data));
@@ -83,10 +74,7 @@ const AuthProvider = ({ children }: childrenIFace) => {
       setRegLoading(true);
       setRegError(null);
 
-      const { data } = await axios.post(`/api/users/register`, userData, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
+      const { data } = await axios.post(`/api/users/register`, userData);
 
       if (data) {
         setRegLoading(false);
@@ -107,10 +95,7 @@ const AuthProvider = ({ children }: childrenIFace) => {
       setLoginLoading(true);
       setLoginError(null);
 
-      const { data } = await axios.post(`/api/users/login`, userData, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
+      const { data } = await axios.post(`/api/users/login`, userData);
 
       if (data) {
         setLoginLoading(false);
@@ -118,7 +103,7 @@ const AuthProvider = ({ children }: childrenIFace) => {
         setUser(data);
         localStorage.setItem("userInfo", JSON.stringify(data));
       }
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       setLoginLoading(false);
       error.response && error.response.data.message
         ? setLoginError(error.response.data.message)
@@ -128,10 +113,7 @@ const AuthProvider = ({ children }: childrenIFace) => {
 
   const logout = async () => {
     try {
-      const { data } = await axios.get(`/api/users/logout`, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
+      const { data } = await axios.get(`/api/users/logout`);
 
       if (data) {
         setLogoutSuccess(true);
