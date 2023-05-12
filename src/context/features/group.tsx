@@ -1,5 +1,5 @@
-import axios, { AxiosError } from "axios";
 import { createContext, ReactNode, useState } from "react";
+import axios from "../../utils";
 import { formatDistanceToNow } from "date-fns";
 
 interface childrenIFace {
@@ -321,7 +321,7 @@ const GroupProvider = ({ children }: childrenIFace) => {
         setDelGroupLoading(false);
         setDelGroupSuccess(true);
       }
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       console.log(error);
     }
   };

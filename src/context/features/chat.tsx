@@ -1,5 +1,5 @@
-import axios from "axios";
 import { createContext, ReactNode, useState } from "react";
+import axios from "../../utils";
 
 interface childrenIFace {
   children: ReactNode;

@@ -1,5 +1,5 @@
-import axios, { AxiosError } from "axios";
 import { createContext, ReactNode, useContext, useState } from "react";
+import axios from "../../utils";
 import { AuthContext } from "./auth";
 import { formatDistanceToNow } from "date-fns";
 
@@ -105,7 +105,7 @@ const UserProvider = ({ children }: childrenIFace) => {
         setUpdLoading(false);
         setUpdSuccess(true);
       }
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       setUpdLoading(false);
       error.response && error.response.data.message
         ? setUpdError(error.response.data.message)

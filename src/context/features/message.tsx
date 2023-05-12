@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../../utils";
 import { createContext, ReactNode, useState, useContext } from "react";
 import { SocketContext } from "./socket";
 

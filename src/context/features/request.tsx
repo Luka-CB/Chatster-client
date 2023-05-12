@@ -1,5 +1,5 @@
-import axios from "axios";
 import { createContext, ReactNode, useState } from "react";
+import axios from "../../utils";
 import { formatDistanceToNow } from "date-fns";
 
 interface childrenIFace {
