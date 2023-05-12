@@ -4,6 +4,8 @@ import Logo from "../assets/images/chatster-logo-var-2-with-shadow.png";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/features/auth";
 
+const url: any = import.meta.env.VITE_APP_API_URL;
+
 const Header = () => {
   const { user, logout, logoutSuccess } = useContext(AuthContext);
 
@@ -19,7 +21,7 @@ const Header = () => {
   }, [logoutSuccess]);
 
   const logoutOauth = () => {
-    window.open("http://localhost:5000/api/auth/logout", "_self");
+    window.open(`${url}/api/auth/logout`, "_self");
     localStorage.removeItem("userInfo");
   };
 
