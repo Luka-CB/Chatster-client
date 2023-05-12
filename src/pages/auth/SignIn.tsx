@@ -9,6 +9,7 @@ import { StateContext } from "../../context/features/states";
 import Spinner from "../../components/Spinner";
 
 const url: any = import.meta.env.VITE_APP_API_URL;
+const urlLocal: any = import.meta.env.VITE_APP_API_URL_LOCAL;
 
 const SignIn = () => {
   const { login, loginSuccess, loginError, loginLoading } =

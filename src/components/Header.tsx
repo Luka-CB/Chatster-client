@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/features/auth";
 
 const url: any = import.meta.env.VITE_APP_API_URL;
+const urlLocal: any = import.meta.env.VITE_APP_API_URL_LOCAL;
 
 const Header = () => {
   const { user, logout, logoutSuccess } = useContext(AuthContext);
