@@ -74,11 +74,13 @@ const SearchFriend = () => {
             {searchResult?.map((user) => (
               <div className="user" key={user._id}>
                 <div className="info">
-                  {user.avatar ? (
-                    <img src={user.avatar} alt="User Avatar" />
-                  ) : (
-                    <img src={DummyProfilePic} alt="Dummy Profile Picture" />
-                  )}
+                  <div className="image">
+                    {user.avatar ? (
+                      <img src={user.avatar} alt="User Avatar" />
+                    ) : (
+                      <img src={DummyProfilePic} alt="Dummy Profile Picture" />
+                    )}
+                  </div>
                   <h3 className="username">{user.username}</h3>
                 </div>
                 <div className="actions">
