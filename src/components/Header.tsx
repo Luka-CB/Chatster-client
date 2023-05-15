@@ -22,7 +22,7 @@ const Header = () => {
   }, [logoutSuccess]);
 
   const logoutOauth = () => {
-    window.open(`${url}/api/auth/logout`, "_self");
+    window.open(`${urlLocal}/api/auth/logout`, "_self");
     localStorage.removeItem("userInfo");
   };
 

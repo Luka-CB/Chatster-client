@@ -6,12 +6,11 @@ import { ImageContext } from "../context/features/image";
 
 interface propsIFace {
   avatar: string | undefined;
-  type: string;
-  groupId?: string;
-  upload_preset: string;
+  id?: string;
+  route: string;
 }
 
-const UploadImage: React.FC<propsIFace> = ({ avatar, type, groupId }) => {
+const UploadImage: React.FC<propsIFace> = ({ avatar, route, id = "" }) => {
   const {
     image,
     setImage,
@@ -22,8 +21,8 @@ const UploadImage: React.FC<propsIFace> = ({ avatar, type, groupId }) => {
     removeImage,
     removeImageLoading,
     removeImageSuccess,
-    setAddedProfImage,
-    addedProfImage,
+    setAddedImage,
+    addedImage,
     setRemoveImageSuccess,
   } = useContext(ImageContext);
   const { setShowUploadImage } = useContext(StateContext);
@@ -53,7 +52,7 @@ const UploadImage: React.FC<propsIFace> = ({ avatar, type, groupId }) => {
   useEffect(() => {
     if (removeImageSuccess) {
       setRemoveImageSuccess(false);
-      setAddedProfImage("");
+      setAddedImage("");
       setImage("");
     }
   }, [removeImageSuccess]);
@@ -69,8 +68,8 @@ const UploadImage: React.FC<propsIFace> = ({ avatar, type, groupId }) => {
         </div>
         <div className="preview-image">
           <div className="image">
-            {addedProfImage ? (
-              <img src={addedProfImage} alt="Preview Image" />
+            {addedImage ? (
+              <img src={addedImage} alt="Preview Image" />
             ) : image ? (
               <img src={image} alt="Preview Image" />
             ) : avatar ? (
@@ -93,14 +92,14 @@ const UploadImage: React.FC<propsIFace> = ({ avatar, type, groupId }) => {
           <button
             id="upload-btn"
             disabled={!image || uploadImageLoading || removeImageLoading}
-            onClick={() => uploadImage()}
+            onClick={() => uploadImage(route, id)}
           >
             {uploadImageLoading ? "Uploading..." : "Upload Image"}
           </button>
           <button
             id="remove-btn"
             disabled={!avatar || uploadImageLoading || removeImageLoading}
-            onClick={() => removeImage()}
+            onClick={() => removeImage(route, id)}
           >
             {removeImageLoading ? "Removing..." : "Remove Image"}
           </button>

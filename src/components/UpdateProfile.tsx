@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { FaTimesCircle, FaTrashAlt, FaCaretDown } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/features/auth";
 import { StateContext } from "../context/features/states";
 import { UserContext, userIFace } from "../context/features/users";
@@ -23,6 +24,7 @@ const UpdateProfile: React.FC<propsIFace> = ({
   const [password, setPassword] = useState("");
 
   const windowSize = useWindowSize();
+  const navigate = useNavigate();
 
   const { logout } = useContext(AuthContext);
   const { showDeleteModal, setShowDeleteModal } = useContext(StateContext);
@@ -58,6 +60,7 @@ const UpdateProfile: React.FC<propsIFace> = ({
     if (delSuccess) {
       logout();
       localStorage.removeItem("userInfo");
+      navigate("/");
       window.location.reload();
     }
   }, [delSuccess]);

@@ -74,12 +74,7 @@ const Group = () => {
       )}
 
       {showUploadImage && (
-        <UploadImage
-          avatar={group?.image}
-          type={"group"}
-          groupId={group._id}
-          upload_preset={"simple-chat-group-image"}
-        />
+        <UploadImage avatar={group?.image} id={group._id} route="groups" />
       )}
 
       {showUpdateGroupName && (

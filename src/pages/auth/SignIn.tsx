@@ -34,7 +34,7 @@ const SignIn = () => {
   }, [loginSuccess, redirectRoute]);
 
   const google = () => {
-    window.open(`${url}/api/auth/google`, "_self");
+    window.open(`${urlLocal}/api/auth/google`, "_self");
   };
 
   const facebook = () => {

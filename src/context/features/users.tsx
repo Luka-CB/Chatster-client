@@ -36,13 +36,7 @@ interface userContextIFace {
   getSearchUsers: (q: string) => void;
   getProfile: () => void;
   updateProfile: (userData: updUserData) => void;
-  updateProfileImage: (imageUrl: string, publicId: string) => void;
-  removeProfileImage: () => void;
   deleteUser: () => void;
-  updProfImgLoading: boolean;
-  updProfImgSuccess: boolean;
-  removeProfImgLoading: boolean;
-  removeProfImgSuccess: boolean;
   searchLoading: boolean;
   updLoading: boolean;
   updSuccess: boolean;
@@ -63,12 +57,6 @@ const UserProvider = ({ children }: childrenIFace) => {
   const [updLoading, setUpdLoading] = useState(false);
   const [updSuccess, setUpdSuccess] = useState(false);
   const [updError, setUpdError] = useState(null);
-
-  const [updProfImgLoading, setUpdProfImgLoading] = useState(false);
-  const [updProfImgSuccess, setUpdProfImgSuccess] = useState(false);
-
-  const [removeProfImgLoading, setRemoveProfImgLoading] = useState(false);
-  const [removeProfImgSuccess, setRemoveProfImgSuccess] = useState(false);
 
   const [searchResult, setSearchResult] = useState<userIFace[]>([]);
   const [searchResCount, setSearchResCount] = useState(0);
@@ -110,46 +98,6 @@ const UserProvider = ({ children }: childrenIFace) => {
       error.response && error.response.data.message
         ? setUpdError(error.response.data.message)
         : setUpdError(error.message);
-    }
-  };
-
-  const updateProfileImage = async (imageUrl: string, publicId: string) => {
-    setUpdProfImgLoading(true);
-    setUpdProfImgSuccess(false);
-
-    try {
-      const { data } = await axios.put("/api/users/profile/update_prof_img", {
-        imageUrl,
-        publicId,
-      });
-
-      if (data) {
-        setUpdProfImgLoading(false);
-        setUpdProfImgSuccess(true);
-      }
-    } catch (error) {
-      setUpdProfImgLoading(false);
-      console.log(error);
-    }
-  };
-
-  const removeProfileImage = async () => {
-    setRemoveProfImgLoading(true);
-    setRemoveProfImgSuccess(false);
-
-    try {
-      const { data } = await axios.put(
-        "/api/users/profile/remove_prof_img",
-        {}
-      );
-
-      if (data) {
-        setRemoveProfImgLoading(false);
-        setRemoveProfImgSuccess(true);
-      }
-    } catch (error) {
-      setRemoveProfImgLoading(false);
-      console.log(error);
     }
   };
 
@@ -235,12 +183,6 @@ const UserProvider = ({ children }: childrenIFace) => {
     updSuccess,
     setUpdSuccess,
     updError,
-    updateProfileImage,
-    updProfImgLoading,
-    updProfImgSuccess,
-    removeProfileImage,
-    removeProfImgLoading,
-    removeProfImgSuccess,
     delLoading,
     delSuccess,
     setDelSuccess,

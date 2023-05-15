@@ -12,21 +12,21 @@ interface imageContextIFace {
   setUploadImageLoading: any;
   uploadImageSuccess: boolean;
   setUploadImageSuccess: any;
-  uploadImage: () => void;
-  removeImage: () => void;
+  uploadImage: (route: string, id: string) => void;
+  removeImage: (route: string, id: string) => void;
   removeImageLoading: boolean;
   setRemoveImageLoading: any;
   removeImageSuccess: boolean;
   setRemoveImageSuccess: any;
-  addedProfImage: string;
-  setAddedProfImage: any;
+  addedImage: string;
+  setAddedImage: any;
 }
 
 export const ImageContext = createContext({} as imageContextIFace);
 
 const ImageProvider = ({ children }: childrenIFace) => {
   const [image, setImage] = useState("");
-  const [addedProfImage, setAddedProfImage] = useState("");
+  const [addedImage, setAddedImage] = useState("");
 
   const [uploadImageLoading, setUploadImageLoading] = useState(false);
   const [uploadImageSuccess, setUploadImageSuccess] = useState(false);
@@ -34,19 +34,20 @@ const ImageProvider = ({ children }: childrenIFace) => {
   const [removeImageLoading, setRemoveImageLoading] = useState(false);
   const [removeImageSuccess, setRemoveImageSuccess] = useState(false);
 
-  const uploadImage = async () => {
+  const uploadImage = async (route: string, id: string) => {
     setUploadImageLoading(true);
     setUploadImageSuccess(false);
 
     try {
-      const { data } = await axios.post("/api/users/profile/upload_prof_img", {
+      const { data } = await axios.put(`/api/${route}/upload_img`, {
         image,
+        id,
       });
 
       if (data) {
         setUploadImageLoading(false);
         setUploadImageSuccess(true);
-        setAddedProfImage(data.addedImage);
+        setAddedImage(data.addedImage);
       }
     } catch (error) {
       setUploadImageLoading(false);
@@ -54,15 +55,12 @@ const ImageProvider = ({ children }: childrenIFace) => {
     }
   };
 
-  const removeImage = async () => {
+  const removeImage = async (route: string, id: string) => {
     setRemoveImageLoading(true);
     setRemoveImageSuccess(false);
 
     try {
-      const { data } = await axios.put(
-        "/api/users/profile/remove_prof_img",
-        {}
-      );
+      const { data } = await axios.put(`/api/${route}/remove_img`, { id });
 
       if (data) {
         setRemoveImageLoading(false);
@@ -87,8 +85,8 @@ const ImageProvider = ({ children }: childrenIFace) => {
     setRemoveImageLoading,
     removeImageSuccess,
     setRemoveImageSuccess,
-    addedProfImage,
-    setAddedProfImage,
+    addedImage,
+    setAddedImage,
   };
 
   return (

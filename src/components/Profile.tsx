@@ -14,7 +14,7 @@ const Profile = () => {
   const [accIndex, setAccIndex] = useState<number | null>(null);
   const [rejIndex, setRejIndex] = useState<number | null>(null);
 
-  const { addedProfImage } = useContext(ImageContext);
+  const { addedImage, setAddedImage } = useContext(ImageContext);
   const {
     showUploadImage,
     setShowUploadImage,
@@ -65,8 +65,8 @@ const Profile = () => {
       <div className="profile-info">
         <div className="avatar">
           <div className="image">
-            {addedProfImage ? (
-              <img src={addedProfImage} alt="temp Image" />
+            {addedImage ? (
+              <img src={addedImage} alt="temp Image" />
             ) : profileInfo?.avatar ? (
               <img src={profileInfo.avatar} alt={profileInfo.username} />
             ) : (
@@ -75,7 +75,10 @@ const Profile = () => {
             <div
               className="edit-avatar"
               title="Edit Profile Picture"
-              onClick={() => setShowUploadImage(true)}
+              onClick={() => {
+                setShowUploadImage(true);
+                setAddedImage("");
+              }}
             >
               <BsPencilFill id="pencil" />
             </div>
@@ -149,11 +152,7 @@ const Profile = () => {
       />
 
       {showUploadImage && (
-        <UploadImage
-          avatar={profileInfo?.avatar}
-          type={"user"}
-          upload_preset={"simple-chat-profile-image"}
-        />
+        <UploadImage avatar={profileInfo?.avatar} route="users" />
       )}
     </div>
   );

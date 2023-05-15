@@ -31,10 +31,7 @@ const App = () => {
         path="/signup"
         element={user?.id ? <Navigate to={"/"} /> : <SignUp />}
       />
-      <Route
-        path="/chat"
-        element={!user?.id ? <Navigate to={"/"} /> : <ChatPage />}
-      />
+      <Route path="/chat" element={<ChatPage />} />
       <Route path="/redirect" element={<Redirect />} />
     </Routes>
   );
