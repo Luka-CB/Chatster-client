@@ -34,11 +34,11 @@ const SignIn = () => {
   }, [loginSuccess, redirectRoute]);
 
   const google = () => {
-    window.open(`${urlLocal}/api/auth/google`, "_self");
+    window.open(`https://chatster-api.onrender.com/api/auth/google`, "_self");
   };
 
   const facebook = () => {
-    window.open(`${url}/api/auth/facebook`, "_self");
+    window.open(`https://chatster-api.onrender.com/api/auth/facebook`, "_self");
   };
 
   const submitHandler = (e: any) => {
