@@ -5,7 +5,7 @@ const urlLocal: any = import.meta.env.VITE_APP_API_URL_LOCAL;
 const nodeEnv: any = import.meta.env.VITE_APP_NODE_ENV;
 
 export default axios.create({
-  baseURL: nodeEnv === "development" ? urlLocal : url,
+  baseURL: "https://chatster-api.onrender.com",
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });

@@ -81,7 +81,7 @@ const SocketProvider = ({ children }: childrenIFace) => {
   const url: any = import.meta.env.VITE_APP_API_URL;
 
   useEffect(() => {
-    setSocket(io(url));
+    setSocket(io("https://chatster-api.onrender.com"));
   }, []);
 
   const { user } = useContext(AuthContext);
