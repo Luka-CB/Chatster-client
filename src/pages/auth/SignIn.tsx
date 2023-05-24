@@ -10,6 +10,7 @@ import Spinner from "../../components/Spinner";
 
 const url: any = import.meta.env.VITE_APP_API_URL;
 const urlLocal: any = import.meta.env.VITE_APP_API_URL_LOCAL;
+const nodeEnv: any = import.meta.env.VITE_APP_NODE_ENV;
 
 const SignIn = () => {
   const { login, loginSuccess, loginError, loginLoading } =
