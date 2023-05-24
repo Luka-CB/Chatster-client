@@ -48,7 +48,7 @@ const Group = () => {
         </div>
       )}
       <div className="section-two">
-        {windowSize > 500 && window.innerWidth > 500 ? <GroupPanel /> : null}
+        {windowSize <= 500 && window.innerWidth <= 500 ? null : <GroupPanel />}
         <GroupMembers />
       </div>
 
