@@ -52,13 +52,11 @@ const AuthProvider = ({ children }: childrenIFace) => {
   const [loginError, setLoginError] = useState(null);
   const [loginSuccess, setLoginSuccess] = useState(false);
 
-  // useEffect(() => {
-  //   if (localStorage.getItem("userInfo")) {
-  //     setUser(JSON.parse(localStorage.getItem("userInfo") || ""));
-  //   }
-
-  //   getOauthUser();
-  // }, []);
+  useEffect(() => {
+    if (localStorage.getItem("userInfo")) {
+      setUser(JSON.parse(localStorage.getItem("userInfo") || ""));
+    }
+  }, []);
 
   const getOauthUser = async () => {
     const { data } = await axios.get(`/api/auth/user-data`);
