@@ -6,7 +6,7 @@ import { StateContext } from "../context/features/states";
 
 const Redirect = () => {
   const { redirectRoute, setRedirectRoute } = useContext(StateContext);
-  const { user } = useContext(AuthContext);
+  const { user, getOauthUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -19,6 +19,8 @@ const Redirect = () => {
       } else {
         navigate("/");
       }
+    } else {
+      getOauthUser();
     }
   }, [user, redirectRoute]);
 

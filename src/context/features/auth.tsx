@@ -24,6 +24,7 @@ interface authContextIFace {
   register: (userData: registerUserIFace) => void;
   login: (userData: registerUserIFace) => void;
   logout: () => void;
+  getOauthUser: () => void;
 
   logoutSuccess: boolean;
 
@@ -51,13 +52,13 @@ const AuthProvider = ({ children }: childrenIFace) => {
   const [loginError, setLoginError] = useState(null);
   const [loginSuccess, setLoginSuccess] = useState(false);
 
-  useEffect(() => {
-    if (localStorage.getItem("userInfo")) {
-      setUser(JSON.parse(localStorage.getItem("userInfo") || ""));
-    }
+  // useEffect(() => {
+  //   if (localStorage.getItem("userInfo")) {
+  //     setUser(JSON.parse(localStorage.getItem("userInfo") || ""));
+  //   }
 
-    getOauthUser();
-  }, []);
+  //   getOauthUser();
+  // }, []);
 
   const getOauthUser = async () => {
     const { data } = await axios.get(`/api/auth/user-data`);
@@ -69,7 +70,6 @@ const AuthProvider = ({ children }: childrenIFace) => {
   };
 
   const register = async (userData: registerUserIFace) => {
-    console.log(userData);
     try {
       setRegLoading(true);
       setRegError(null);
@@ -136,6 +136,7 @@ const AuthProvider = ({ children }: childrenIFace) => {
     loginError,
     loginSuccess,
     login,
+    getOauthUser,
   };
 
   return (
